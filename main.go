@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 	"log/slog"
 	"net/http"
@@ -12,6 +13,9 @@ var (
 	serviceName = "tamagotchi"
 	defaultPort = "8006"
 )
+
+//go:embed static
+var static embed.FS
 
 func main() {
 	port, ok := os.LookupEnv(fmt.Sprintf(
