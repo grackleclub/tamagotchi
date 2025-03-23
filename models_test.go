@@ -2,7 +2,6 @@ package main
 
 import (
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/require"
 )
@@ -30,15 +29,4 @@ func TestPointsByCategory(t *testing.T) {
 	for _, category := range categories {
 		t.Logf("%d: %s", points[category], category)
 	}
-}
-
-func sampleEntries(qty int) []entry {
-	entries := make([]entry, qty)
-	for i := 0; i < qty; i++ {
-		entries[i] = entry{
-			time:     time.Now().Add(time.Duration(i) * time.Hour),
-			activity: activities[i%len(activities)],
-		}
-	}
-	return entries
 }

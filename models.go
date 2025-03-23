@@ -15,12 +15,12 @@ var (
 	categories = []category{health, education, peace, joy}
 )
 
-type activity struct {
+type Activity struct {
 	Name   string
 	points map[category]int
 }
 
-var activities = []activity{
+var activities = []Activity{
 	{
 		Name: "cycling",
 		points: map[category]int{
@@ -52,7 +52,7 @@ var activities = []activity{
 
 type entry struct {
 	time     time.Time
-	activity activity
+	activity Activity
 }
 
 func pointsByActivity(entries []entry) map[string]int {
