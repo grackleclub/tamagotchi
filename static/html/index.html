@@ -10,10 +10,13 @@
 <body>
   <div>
     <h3>For thing in things</h3>
-    <p>select from this list of tasks</p>
+    <p>select from this list of activities</p>
     <form>
-      <select name="tasks" id="tasks">
-        <option value="">this needs to be some kind of template</option>
+      <select name="activities" id="activities">
+        <option value="">choose an option</option>
+        {{ range . }}
+        <option value="{{ .Name }}">{{ .Name }}</option>
+        {{ end }}
       </select>
       <input type="submit" value="Submit">
     </form>
