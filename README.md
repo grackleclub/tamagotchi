@@ -1,0 +1,2 @@
+# tamagotchi
+gamified self-care
