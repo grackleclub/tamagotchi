@@ -20,7 +20,7 @@ func TestPointsByActivity(t *testing.T) {
 	points := pointsByActivity(entries)
 	require.Greater(t, sampleEntryQty, 0)
 	for _, activity := range activities {
-		t.Logf("%d: %s", points[activity.name], activity.name)
+		t.Logf("%d: %s", points[activity.Name], activity.Name)
 	}
 }
 
