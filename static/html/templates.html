@@ -1,0 +1,8 @@
+{{ define "categorySelect" }}
+<select name="category" id="category">
+  <option value="">choose a category</option>
+  {{ range .Categories }}
+  <option value="{{ . }}">{{ . }}</option>
+  {{ end }}
+</select>
+{{ end }}

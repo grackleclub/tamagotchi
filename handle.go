@@ -9,6 +9,7 @@ import (
 
 type page struct {
 	Activities       []Activity
+	Categories       []category
 	PointsByActivity map[string]int
 	PointsByCategory map[category]int
 }
@@ -17,7 +18,7 @@ func handleRoot(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
 		slog.Info("GET index")
-		tmpl, err := template.ParseFS(static, "static/html/index.html")
+		tmpl, err := template.ParseFS(static, "static/html/index.html", "static/html/templates.html")
 		if err != nil {
 			slog.Error("parse template", "error", err)
 			http.Error(w, "server error", http.StatusInternalServerError)
@@ -40,7 +41,7 @@ func handleRoot(w http.ResponseWriter, r *http.Request) {
 
 		// TODO add entry to user
 
-		tmpl, err := template.ParseFS(static, "static/html/index.html")
+		tmpl, err := template.ParseFS(static, "static/html/index.html", "static/html/templates.html")
 		if err != nil {
 			slog.Error("parse template", "error", err)
 			http.Error(w, "server error", http.StatusInternalServerError)
@@ -60,6 +61,7 @@ func handleRoot(w http.ResponseWriter, r *http.Request) {
 func newPage(entries []entry) page {
 	return page{
 		Activities:       activities,
+		Categories:       categories,
 		PointsByActivity: pointsByActivity(entries),
 		PointsByCategory: pointsByCategory(entries),
 	}
