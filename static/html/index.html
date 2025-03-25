@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>thing</title>
-    <link rel="stylesheet" href="static/css/style.css">
-    <script src="static/js/main.js"></script>
+    <!-- <link rel="stylesheet" href="static/css/style.css"> -->
+    <script src="/static/js/main.js"></script>
 </head>
 
 <body>
-  <div>
+  <div id="pick">
     <h2>Select below</h2>
-    <form method="POST">
+    <form id="selectActivity" method="POST">
       <select name="activity" id="activity">
         <option value="">choose an option</option>
         {{ range .Activities }}
@@ -56,8 +56,8 @@
 
   <div>
     <h3>Add Activity</h3>
-    <form method="POST">
-      <input type="text" id="activity" name="activity" placeholder="Activity">
+    <form id="addActivity" method="POST">
+      <input type="text" id="Name" name="Name" placeholder="Activity">
       <br>  <!-- take this out and fix with styling -->
       {{ template "categorySelect" . }}
       <input type="text" id="points" name="points" placeholder="Points">
