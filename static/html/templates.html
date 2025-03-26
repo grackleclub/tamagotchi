@@ -1,8 +1,5 @@
-{{ define "categorySelect" }}
-<select name="category" id="category">
-  <option value="">choose a category</option>
+{{ define "categoryList" }}
   {{ range .Categories }}
-  <option value="{{ . }}">{{ . }}</option>
+  <p value="{{ . }}">{{ . }}</p>
   {{ end }}
-</select>
 {{ end }}
