@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 	"log/slog"
 	"net/http"
@@ -13,6 +14,9 @@ var (
 	defaultPort = "8006"
 )
 
+//go:embed static
+var static embed.FS
+
 func main() {
 	port, ok := os.LookupEnv(fmt.Sprintf(
 		"%s_PORT", strings.ToUpper(serviceName),
@@ -23,6 +27,10 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", handleRoot)
+
+	staticFileServer := http.FileServer(http.Dir("static"))
+	mux.Handle("/static/", http.StripPrefix("/static/", staticFileServer))
+
 	slog.Info("listen and serve", "address", fmt.Sprintf("http://localhost:%s", port))
 	http.ListenAndServe(fmt.Sprintf(":%s", port), mux)
 }

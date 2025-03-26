@@ -4,19 +4,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>thing</title>
-    <link rel="stylesheet" href="static/css/style.css">
+    <!-- <link rel="stylesheet" href="static/css/style.css"> -->
+    <script src="/static/js/main.js"></script>
 </head>
 
 <body>
-  <div>
-    <h3>For thing in things</h3>
-    <p>select from this list of tasks</p>
-    <form>
-      <select name="tasks" id="tasks">
-        <option value="">this needs to be some kind of template</option>
+  <div id="pick">
+    <h2>Select below</h2>
+    <form id="selectActivity" method="POST">
+      <select name="activity" id="activity">
+        <option value="">choose an option</option>
+        {{ range .Activities }}
+        <option value="{{ .Name }}">{{ .Name }}</option>
+        {{ end }}
       </select>
       <input type="submit" value="Submit">
     </form>
   </div>
+
+  <div>
+    <h3>Points by Category</h3>
+    <table>
+      <tr>
+        <th>Category</th>
+        <th>Points</th>
+      </tr>
+      {{ range $category, $points := .PointsByCategory }}
+      <tr>
+        <td>{{ $category }}</td>
+        <td>{{ $points }}</td>
+      </tr>
+      {{ end }}
+    </table>
+  </div>
+
+  <div>
+    <h3>Points by Activity</h3>
+    <table>
+      <tr>
+        <th>Activity</th>
+        <th>Points</th>
+      </tr>
+      {{ range $activity, $points := .PointsByActivity }}
+      <tr>
+        <td>{{ $activity }}</td>
+        <td>{{ $points }}</td>
+      </tr>
+      {{ end }}
+    </table>
+  </div>
+
+  <div>
+    <h3>Add Activity</h3>
+    <form id="addActivity" method="POST">
+      <input type="text" id="Name" name="Name" placeholder="Activity">
+      <br>  <!-- take this out and fix with styling -->
+      <label>health</label>
+      <input type="number" id="health" name="health" placeholder="Points">
+      <br>  <!-- take this out and fix with styling -->
+      <label>education</label>
+      <input type="number" id="education" name="education" placeholder="Points">
+      <br>  <!-- take this out and fix with styling -->
+      <label>joy</label>
+      <input type="number" id="joy" name="joy" placeholder="Points">
+      <br>  <!-- take this out and fix with styling -->
+      <label>peace</label>
+      <input type="number" id="peace" name="peace" placeholder="Points">
+      <input type="submit" value="Add">
+    </form>
+    <br>  <!-- take this out and fix with styling -->
+  </div>
+
+  <div>
+    <h3>Your Activities</h3>
+    <ul id="activityList"><span></span></ul>
+    <br>  <!-- take this out and fix with styling -->
+  </div>
+
+  <div>
+    <button id="clearStorage">Clear All Activities</button>
+  </div>
+
 </body>
 </html>
