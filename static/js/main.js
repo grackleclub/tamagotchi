@@ -8,6 +8,35 @@ function resetForm() {
   document.getElementById("addActivity").reset();
 }
 
+function displayActivities() {
+  const activityList = document.getElementById("activityList");
+  activityList.innerHTML = "";
+
+  const activities = JSON.parse(localStorage.getItem("activities")) || [];
+  activities.forEach((activity, index) => {
+    const listItem = document.createElement("li");
+    listItem.textContent = activity.name;
+
+    const removeButton = document.createElement("button");
+    removeButton.textContent = "Remove";
+    removeButton.addEventListener("click", handleRemoveButtonClick.bind(null, index));
+
+    listItem.appendChild(removeButton);
+    activityList.appendChild(listItem);
+  });
+}
+
+function handleRemoveButtonClick(index) {
+  removeActivity(index);
+}
+
+function removeActivity(index) {
+  const activities = JSON.parse(localStorage.getItem("activities")) || [];
+  activities.splice(index, 1);
+  localStorage.setItem("activities", JSON.stringify(activities));
+  displayActivities();
+}
+
 function handleAddActivitySubmit(event) {
   event.preventDefault();
 
@@ -34,6 +63,7 @@ function handleAddActivitySubmit(event) {
 
     resetForm();
     alert("Activity added successfully!");
+    displayActivities();
   } else {
     alert("Please fill in all fields.");
   }
@@ -42,6 +72,7 @@ function handleAddActivitySubmit(event) {
 function clearLocalStorage() {
   localStorage.clear();
   alert("Local storage cleared!");
+  displayActivities();
 }
 
 
@@ -54,4 +85,5 @@ function addEventListeners() {
 document.addEventListener("DOMContentLoaded", () => {
   resetForm();
   addEventListeners();
+  displayActivities();
 });
