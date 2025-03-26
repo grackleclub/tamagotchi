@@ -4,6 +4,10 @@ function handleSelectActivitySubmit(event) {
   console.log("Select Activity Form Submitted");
 }
 
+function resetForm() {
+  document.getElementById("addActivity").reset();
+}
+
 function handleAddActivitySubmit(event) {
   event.preventDefault();
 
@@ -28,14 +32,11 @@ function handleAddActivitySubmit(event) {
     activities.push(activity);
     localStorage.setItem("activities", JSON.stringify(activities));
 
+    resetForm();
     alert("Activity added successfully!");
   } else {
     alert("Please fill in all fields.");
   }
-}
-
-function resetForm() {
-  document.getElementById("addActivity").reset();
 }
 
 function clearLocalStorage() {
