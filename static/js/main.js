@@ -85,5 +85,5 @@ function addEventListeners() {
 document.addEventListener("DOMContentLoaded", () => {
   resetForm();
   addEventListeners();
-  displayActivities();
+  
 });
