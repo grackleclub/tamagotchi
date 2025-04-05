@@ -13,6 +13,8 @@ type page struct {
 	PointsByCategory map[category]int
 }
 
+// type health struct {}
+
 func handleRoot(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
@@ -23,6 +25,20 @@ func handleRoot(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "server error", http.StatusInternalServerError)
 			return
 		}
+
+		for _, category := range categories {
+			cookie, err := r.Cookie(string(category))
+			if err != nil {
+				slog.Error("get cookie", "error", err)
+				continue
+			}
+			slog.Info("cookie",
+				"category", category,
+				"value", cookie.Value,
+				"expires", cookie.Expires,
+			)
+		}
+
 		// TODO check the user's session or db
 		entries := sampleEntries(10) // TODO remove mock
 		data := newPage(entries)
@@ -37,6 +53,7 @@ func handleRoot(w http.ResponseWriter, r *http.Request) {
 		activityName := r.FormValue("activity")
 
 		slog.Info("POST activity", "name", activityName)
+		http.SetCookie(w, &http.Cookie{})
 
 		// TODO add entry to user
 
