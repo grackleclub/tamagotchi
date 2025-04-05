@@ -1,5 +1,62 @@
+const reportEmoji = {
+  health: "🥵",
+  education: "🤤",
+  joy: "😭",
+  peace: "🤬",
+  default: "🫥"
+};
+
+function updateReportEmoji(pointsByCategory) {
+  const emojiDisplay = document.querySelector("#reportEmoji");
+
+  if (!emojiDisplay) {
+    console.error("Emoji display element not found");
+    return;
+  }
+
+  let leastCategory = null;
+  let minPoints = Infinity;
+
+  for (const [category, points] of Object.entries(pointsByCategory)) {
+    if (points < minPoints) {
+      minPoints = points;
+      leastCategory = category;
+    }
+  }
+
+  emojiDisplay.textContent = reportEmoji[leastCategory] || reportEmoji.default;
+}
+
+function getCategoryPointsFromTable() {
+  const pointsByCategory = {};
+  const tableRows = document.querySelectorAll("table:nth-of-type(1) tr");
+
+  if (!tableRows.length) {
+    console.error("No rows found in category points table");
+    return pointsByCategory;
+  }
+
+  tableRows.forEach((row, index)=> {
+    if (index === 0) return;
+    const cells = row.querySelectorAll("td");
+    const category = cells[0]?.textContent.trim();
+    const points = parseInt(cells[1]?.textContent.trim(), 10);
+    if (category && !isNaN(points)) {
+      pointsByCategory[category] = points;
+    }
+  });
+
+  return pointsByCategory;
+}
+
+function initializeReportEmoji() {
+  const pointsByCategory = getCategoryPointsFromTable();
+  updateReportEmoji(pointsByCategory);
+}
+
+
 function handleSelectActivitySubmit(event) {
-  event.preventDefault();
+  event.preventDefault();y = docu
   // Handle the form submission logic here
   console.log("Select Activity Form Submitted");
 }
@@ -75,15 +132,20 @@ function clearLocalStorage() {
   displayActivities();
 }
 
+function forceReport () {
+  initializeReportEmoji();
+}
+
 
 function addEventListeners() {
   document.getElementById("selectActivity").addEventListener("submit", handleSelectActivitySubmit);
   document.getElementById("addActivity").addEventListener("submit", handleAddActivitySubmit);
   document.getElementById("clearStorage").addEventListener("click", clearLocalStorage);
+  document.getElementById("forceReport").addEventListener("click", forceReport);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   resetForm();
   addEventListeners();
-  
+  initializeReportEmoji();
 });

@@ -34,7 +34,7 @@ var activities = []Activity{
 		Name: "reading",
 		points: map[category]int{
 			health:    0,
-			education: 3,
+			education: 0,
 			joy:       1,
 			peace:     1,
 		},
