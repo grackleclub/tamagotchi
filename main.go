@@ -17,9 +17,6 @@ var (
 //go:embed static
 var static embed.FS
 
-//go:embed static
-var static embed.FS
-
 func main() {
 	port, ok := os.LookupEnv(fmt.Sprintf(
 		"%s_PORT", strings.ToUpper(serviceName),
