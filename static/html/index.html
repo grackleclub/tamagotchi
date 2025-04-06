@@ -5,48 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>thing</title>
     <link rel="stylesheet" href="static/css/style.css">
+    <script src="/static/js/script.js"></script>
 </head>
 
 <body>
   <div>
+    <h1>{{ .Title }}</h1>
     <h3>Select below</h3>
     <form method="POST">
       <select name="activity" id="activity">
-        <option value="">choose an option</option>
+        <!-- <option value="">choose an option</option>
         {{ range .Activities }}
         <option value="{{ .Name }}">{{ .Name }}</option>
-        {{ end }}
+        {{ end }} -->
       </select>
       <input type="submit" value="Submit">
     </form>
-
-    <h3>Points by Category</h3>
-    <table>
-      <tr>
-        <th>Category</th>
-        <th>Points</th>
-      </tr>
-      {{ range $category, $points := .PointsByCategory }}
-      <tr>
-        <td>{{ $category }}</td>
-        <td>{{ $points }}</td>
-      </tr>
-      {{ end }}
-    </table>
-
-    <h3>Points by Activity</h3>
-    <table>
-      <tr>
-        <th>Activity</th>
-        <th>Points</th>
-      </tr>
-      {{ range $activity, $points := .PointsByActivity }}
-      <tr>
-        <td>{{ $activity }}</td>
-        <td>{{ $points }}</td>
-      </tr>
-      {{ end }}
-    </table>
 
   </div>
 </body>
