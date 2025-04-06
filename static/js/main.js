@@ -1,11 +1,12 @@
 function handleSelectActivitySubmit(event) {
   event.preventDefault();
+  resetForm("selectActivity");
   // Handle the form submission logic here
   console.log("Select Activity Form Submitted");
 }
 
-function resetForm() {
-  document.getElementById("addActivity").reset();
+function resetForm(formId) {
+  document.getElementById(formId).reset();
 }
 
 function displayActivities() {
@@ -61,7 +62,7 @@ function handleAddActivitySubmit(event) {
     activities.push(activity);
     localStorage.setItem("activities", JSON.stringify(activities));
 
-    resetForm();
+    resetForm("addActivity");
     alert("Activity added successfully!");
     displayActivities();
   } else {
@@ -83,7 +84,9 @@ function addEventListeners() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  resetForm();
+  resetForm("selectActivity");
+  resetForm("addActivity");
+  displayActivities();
   addEventListeners();
   
 });
