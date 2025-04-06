@@ -1,0 +1,25 @@
+{
+    "foo": "bar",
+    "baz": {
+        "qux": "quux"
+    },
+    "array": [
+        {
+            "key": "value"
+        },
+        {
+            "key2": "value2"
+        }
+    ],
+    "nested": {
+        "array": [
+            {
+                "key": "value"
+            },
+            {
+                "key2": "value2"
+            }
+        ]
+    },
+    "empty": {}
+}
