@@ -17,6 +17,9 @@ var (
 //go:embed static
 var static embed.FS
 
+//go:embed static
+var static embed.FS
+
 func main() {
 	port, ok := os.LookupEnv(fmt.Sprintf(
 		"%s_PORT", strings.ToUpper(serviceName),
@@ -27,10 +30,7 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", handleRoot)
-
-	staticFileServer := http.FileServer(http.Dir("static"))
-	mux.Handle("/static/", http.StripPrefix("/static/", staticFileServer))
-
+	mux.Handle("/static/", customFileServer(http.FS(static)))
 	slog.Info("listen and serve", "address", fmt.Sprintf("http://localhost:%s", port))
 	http.ListenAndServe(fmt.Sprintf(":%s", port), mux)
 }

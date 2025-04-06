@@ -3,15 +3,15 @@ package main
 import (
 	"html/template"
 	"log/slog"
+	"mime"
 	"net/http"
-	"time"
+	"path/filepath"
 )
 
+var greeting string = "Hello, person!"
+
 type page struct {
-	Activities       []Activity
-	Categories       []category
-	PointsByActivity map[string]int
-	PointsByCategory map[category]int
+	Title string
 }
 
 func handleRoot(w http.ResponseWriter, r *http.Request) {
@@ -24,33 +24,24 @@ func handleRoot(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "server error", http.StatusInternalServerError)
 			return
 		}
-		// TODO check the user's session or db
-		entries := sampleEntries(10) // TODO remove mock
-		data := newPage(entries)
+		data := page{
+			Title: greeting,
+		}
 		tmpl.Execute(w, data)
-
 	default:
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
 	}
-
 }
 
-func newPage(entries []entry) page {
-	return page{
-		Activities:       activities,
-		Categories:       categories,
-		PointsByActivity: pointsByActivity(entries),
-		PointsByCategory: pointsByCategory(entries),
-	}
-}
-
-func sampleEntries(qty int) []entry {
-	entries := make([]entry, qty)
-	for i := 0; i < qty; i++ {
-		entries[i] = entry{
-			time:     time.Now().Add(time.Duration(i) * time.Hour),
-			activity: activities[i%len(activities)],
+// Custom file server to set correct MIME types
+func customFileServer(fs http.FileSystem) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ext := filepath.Ext(r.URL.Path)
+		mimeType := mime.TypeByExtension(ext)
+		slog.Info("request for mime type", "ext", ext, "mimeType", mimeType)
+		if mimeType != "" {
+			w.Header().Set("Content-Type", mimeType)
 		}
-	}
-	return entries
+		http.FileServer(fs).ServeHTTP(w, r)
+	})
 }
