@@ -9,23 +9,23 @@ function resetForm(formId) {
   document.getElementById(formId).reset();
 }
 
-function displayActivities() {
-  const activityList = document.getElementById("activityList");
-  activityList.innerHTML = "";
+// function displayActivities() {
+//   const activityList = document.getElementById("activityList");
+//   activityList.innerHTML = "";
 
-  const activities = JSON.parse(localStorage.getItem("activities")) || [];
-  activities.forEach((activity, index) => {
-    const listItem = document.createElement("li");
-    listItem.textContent = activity.name;
+//   const activities = JSON.parse(localStorage.getItem("activities")) || [];
+//   activities.forEach((activity, index) => {
+//     const listItem = document.createElement("li");
+//     listItem.textContent = activity.name;
 
-    const removeButton = document.createElement("button");
-    removeButton.textContent = "Remove";
-    removeButton.addEventListener("click", handleRemoveButtonClick.bind(null, index));
+//     const removeButton = document.createElement("button");
+//     removeButton.textContent = "Remove";
+//     removeButton.addEventListener("click", handleRemoveButtonClick.bind(null, index));
 
-    listItem.appendChild(removeButton);
-    activityList.appendChild(listItem);
-  });
-}
+//     listItem.appendChild(removeButton);
+//     activityList.appendChild(listItem);
+//   });
+// }
 
 function handleRemoveButtonClick(index) {
   removeActivity(index);
@@ -35,7 +35,7 @@ function removeActivity(index) {
   const activities = JSON.parse(localStorage.getItem("activities")) || [];
   activities.splice(index, 1);
   localStorage.setItem("activities", JSON.stringify(activities));
-  displayActivities();
+  // displayActivities();
 }
 
 function handleAddActivitySubmit(event) {
@@ -64,7 +64,7 @@ function handleAddActivitySubmit(event) {
 
     resetForm("addActivity");
     alert("Activity added successfully!");
-    displayActivities();
+    // displayActivities();
   } else {
     alert("Please fill in all fields.");
   }
@@ -73,7 +73,7 @@ function handleAddActivitySubmit(event) {
 function clearLocalStorage() {
   localStorage.clear();
   alert("Local storage cleared!");
-  displayActivities();
+  // displayActivities();
 }
 
 
@@ -86,7 +86,6 @@ function addEventListeners() {
 document.addEventListener("DOMContentLoaded", () => {
   resetForm("selectActivity");
   resetForm("addActivity");
-  displayActivities();
   addEventListeners();
   
 });
