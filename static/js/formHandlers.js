@@ -13,16 +13,25 @@ export function handleAddActivitySubmit(event) {
   const joy = document.getElementById("joy").value.trim();
   const peace = document.getElementById("peace").value.trim();
 
-  if (activityName && health && education && joy && peace) {
-    const activity = {
-      name: activityName,
-      categories: [
-        { category: "health", points: parseInt(health, 10) },
-        { category: "education", points: parseInt(education, 10) },
-        { category: "joy", points: parseInt(joy, 10) },
-        { category: "peace", points: parseInt(peace, 10) }
-      ]
-    };
+  if (!activityName) {
+    alert("Please enter an activity name.");
+    return;
+  }
+
+  if (!health && !education && !joy && !peace) {
+    alert("Please enter at least one category.");
+    return;
+  }
+
+  const activity = {
+    name: activityName,
+    categories: [
+      { category: "health", points: parseInt(health || "0", 10) },
+      { category: "education", points: parseInt(education || "0", 10) },
+      { category: "joy", points: parseInt(joy || "0", 10) },
+      { category: "peace", points: parseInt(peace || "0", 10) }
+    ]
+  };
 
     const activities = JSON.parse(localStorage.getItem("activities")) || [];
     activities.push(activity);
@@ -30,9 +39,6 @@ export function handleAddActivitySubmit(event) {
 
     resetForm("addActivity");
     alert("Activity added successfully!");
-  } else {
-    alert("Please fill in all fields.");
-  }
 }
 
 export function resetForm(formId) {
