@@ -14,6 +14,23 @@ export function displayActivities() {
   activities.forEach(renderActivity);
 }
 
+export function populateOptions() {
+  const selectMenu = document.getElementById("activity");
+  selectMenu.innerHTML = '<option value="">Select an activity</option>';
+
+  const activities = JSON.parse(localStorage.getItem("activities")) || [];
+
+  activities.forEach(addOption);
+}
+
+function addOption(activity) {
+  const selectMenu = document.getElementById("activity");
+  const option = document.createElement("option");
+  option.value = activity.name;
+  option.textContent = activity.name;
+  selectMenu.appendChild(option);
+}
+
 function renderActivity(activity, index) {
   const activityList = document.getElementById("activityList");
 
@@ -36,4 +53,5 @@ function handleRemoveButtonClick(event) {
   const index = event.target.dataset.index;
   removeActivity(Number(index));
   displayActivities();
+  populateOptions();
 }

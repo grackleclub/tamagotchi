@@ -1,4 +1,4 @@
-import { displayActivities } from "./ui.js";
+import { displayActivities, populateOptions } from "./ui.js";
 
 export function handleSelectActivitySubmit(event) {
   event.preventDefault();
@@ -48,6 +48,7 @@ export function handleAddActivitySubmit(event) {
 
     resetForm("addActivity");
     displayActivities();
+    populateOptions();
     alert("Activity added successfully!");
 }
 
