@@ -1,3 +1,5 @@
+import { displayActivities } from "./ui.js";
+
 export function handleSelectActivitySubmit(event) {
   event.preventDefault();
   resetForm("selectActivity");
@@ -22,6 +24,14 @@ export function handleAddActivitySubmit(event) {
     alert("Please enter at least one category.");
     return;
   }
+  
+  const activities = JSON.parse(localStorage.getItem("activities")) || [];
+  
+  const existingActivity = activities.some(activity => activity.name.toLowerCase() === activityName.toLowerCase());
+  if (existingActivity) {
+    alert("That activity exists. Please choose a different name.");
+    return;
+  }
 
   const activity = {
     name: activityName,
@@ -33,11 +43,11 @@ export function handleAddActivitySubmit(event) {
     ]
   };
 
-    const activities = JSON.parse(localStorage.getItem("activities")) || [];
     activities.push(activity);
     localStorage.setItem("activities", JSON.stringify(activities));
 
     resetForm("addActivity");
+    displayActivities();
     alert("Activity added successfully!");
 }
 

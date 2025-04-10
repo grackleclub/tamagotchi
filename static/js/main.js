@@ -7,13 +7,13 @@ function addEventListeners() {
   document.getElementById("addActivity").addEventListener("submit", handleAddActivitySubmit);
   document.getElementById("clearStorage").addEventListener("click", () => {
     clearLocalStorage();
-    // displayActivities();
+    displayActivities();
   });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   resetForm("selectActivity");
   resetForm("addActivity");
-  // displayActivities();
+  displayActivities();
   addEventListeners();
 });

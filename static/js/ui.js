@@ -5,21 +5,35 @@ export function displayActivities() {
   activityList.innerHTML = "";
 
   const activities = JSON.parse(localStorage.getItem("activities")) || [];
-  activities.forEach((activity, index) => {
-    const listItem = document.createElement("li");
 
-    const activityName = document.createElement("span");
-    activityName.textContent = activity.name;
+  if (activities.length === 0) {
+    activityList.innerHTML = "<li>No activities found</li>";
+    return;
+  }
 
-    const removeButton = document.createElement("button");
-    removeButton.textContent = "Remove";
-    removeButton.addEventListener("click", () => {
-      removeActivity(index);
-      // displayActivities();
-    });
+  activities.forEach(renderActivity);
+}
 
-    listItem.appendChild(activityName);
-    listItem.appendChild(removeButton);
-    activityList.appendChild(listItem);
-  });
+function renderActivity(activity, index) {
+  const activityList = document.getElementById("activityList");
+
+  const listItem = document.createElement("li");
+
+  const activityName = document.createElement("span");
+  activityName.textContent = activity.name;
+
+  const removeButton = document.createElement("button");
+  removeButton.textContent = "Remove";
+  removeButton.dataset.index = index;
+  removeButton.addEventListener("click", handleRemoveButtonClick);
+
+  listItem.appendChild(activityName);
+  listItem.appendChild(removeButton);
+  activityList.appendChild(listItem);
+}
+
+function handleRemoveButtonClick(event) {
+  const index = event.target.dataset.index;
+  removeActivity(Number(index));
+  displayActivities();
 }
