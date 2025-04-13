@@ -1,11 +1,5 @@
 import { displayActivities, populateOptions } from "./ui.js";
 
-export function handleSelectActivitySubmit(event) {
-  event.preventDefault();
-  resetForm("selectActivity");
-  console.log("Select Activity Form Submitted");
-}
-
 export function handleAddActivitySubmit(event) {
   event.preventDefault();
 

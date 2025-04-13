@@ -15,7 +15,7 @@ export function displayActivities() {
 }
 
 export function populateOptions() {
-  const selectMenu = document.getElementById("activity");
+  const selectMenu = document.getElementById("logItem");
   selectMenu.innerHTML = '<option value="">Select an activity</option>';
 
   const activities = JSON.parse(localStorage.getItem("activities")) || [];
@@ -24,7 +24,7 @@ export function populateOptions() {
 }
 
 function addOption(activity) {
-  const selectMenu = document.getElementById("activity");
+  const selectMenu = document.getElementById("logItem");
   const option = document.createElement("option");
   option.value = activity.name;
   option.textContent = activity.name;

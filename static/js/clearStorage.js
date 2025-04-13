@@ -9,6 +9,7 @@ export function clearLocalStorage() {
     localStorage.clear();
     // introduce a delay to make the change more aparent
     setTimeout(() => {
+      console.log("localStorage cleared")
       alert("Local storage cleared!");
     }, 100);
   }
