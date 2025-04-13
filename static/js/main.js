@@ -1,7 +1,8 @@
 import { handleAddActivitySubmit, resetForm } from "./formHandlers.js";
 import { clearLocalStorage } from "./clearStorage.js";
 import { displayActivities, populateOptions } from "./ui.js";
-import { logCreate } from "./log.js";
+import { logCreate, logInterpret, logList } from "./log.js";
+import { usage } from "./storage.js"; 
 
 function addEventListeners() {
   document.getElementById("addActivity").addEventListener("submit", handleAddActivitySubmit);
@@ -25,3 +26,9 @@ function initializeApp() {
 
 document.addEventListener("DOMContentLoaded", initializeApp);
 console.log("App initialized");
+
+logList();
+logInterpret();
+
+usage();
+
