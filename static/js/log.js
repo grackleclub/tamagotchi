@@ -1,6 +1,5 @@
 // create a log entry and place in localStorage
-export function logCreate() {
-    // https://developer.mozilla.org/en-US/docs/Web/API/Window/event
+export function logCreate(event) {
     event.preventDefault();
     const logs = JSON.parse(localStorage.getItem("log")) || [];
     const activityName = document.getElementById("logItem").value.trim();

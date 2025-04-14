@@ -1,25 +1,25 @@
-import { handleAddActivitySubmit, resetForm } from "./formHandlers.js";
+import { activityTemplateAdd, resetForm } from "./formHandlers.js";
 import { clearLocalStorage } from "./clearStorage.js";
-import { displayActivities, populateOptions } from "./ui.js";
+import { activityTemplateList, populateOptions } from "./ui.js";
 import { logCreate, logInterpret, logList } from "./log.js";
 import { fetchDefaults, usage } from "./storage.js"; 
 
 function addEventListeners() {
-  document.getElementById("addActivity").addEventListener("submit", handleAddActivitySubmit);
-  document.getElementById("clearStorage").addEventListener("click", handleClearStorageClick);
+  document.getElementById("addActivity").addEventListener("submit", activityTemplateAdd);
+  document.getElementById("clearStorage").addEventListener("click", clearLocalStorageClick);
   document.getElementById("logCreate").addEventListener("submit", logCreate);
 }
 
-function handleClearStorageClick() {
+function clearLocalStorageClick() {
   clearLocalStorage();
-  displayActivities();
+  activityTemplateList();
   populateOptions();
 }
 
 function initializeApp() {
   resetForm("logCreate");
   resetForm("addActivity");
-  displayActivities();
+  activityTemplateList();
   populateOptions();
   addEventListeners();
 }

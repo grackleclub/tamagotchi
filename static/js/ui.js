@@ -1,6 +1,6 @@
 import { removeActivity } from "./clearStorage.js";
 
-export function displayActivities() {
+export function activityTemplateList() {
   const activityList = document.getElementById("activityList");
   activityList.innerHTML = "";
 
@@ -11,7 +11,7 @@ export function displayActivities() {
     return;
   }
 
-  activities.forEach(renderActivity);
+  activities.forEach(renderActivityTemplate);
 }
 
 export function populateOptions() {
@@ -31,7 +31,7 @@ function addOption(activity) {
   selectMenu.appendChild(option);
 }
 
-function renderActivity(activity, index) {
+function renderActivityTemplate(activity, index) {
   const activityList = document.getElementById("activityList");
 
   const listItem = document.createElement("li");
@@ -52,6 +52,6 @@ function renderActivity(activity, index) {
 function handleRemoveButtonClick(event) {
   const index = event.target.dataset.index;
   removeActivity(Number(index));
-  displayActivities();
+  activityTemplateList();
   populateOptions();
 }
