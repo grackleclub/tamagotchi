@@ -1,4 +1,6 @@
+// create a log entry and place in localStorage
 export function logCreate() {
+    // https://developer.mozilla.org/en-US/docs/Web/API/Window/event
     event.preventDefault();
     const logs = JSON.parse(localStorage.getItem("log")) || [];
     const activityName = document.getElementById("logItem").value.trim();
@@ -30,6 +32,23 @@ export function logInterpret() {
     // TODO interpret log entries and display results
     const logs = JSON.parse(localStorage.getItem("log")) || [];
     for (let log of logs) {
-        console.log(`Activity: ${log.activity}, Date: ${log.date}`);
+        console.log(`logged: ${log.activity} @ ${log.date}`);
     }
+
+    const activites = JSON.parse(localStorage.getItem("activities")) || [];
+    for (let activity of activites) {
+        console.log(`Activity: ${activity.name}`);
+        for (let category of activity.categories) {
+            console.log(`  - ${category.category}: ${category.points}`);
+        }
+    }
+}
+
+function hoursBetween(startTimestamp, endTimestamp) {
+    const startDate = new Date(startTimestamp);
+    const endDate = new Date(endTimestamp);
+
+    const durationMs = endDate - startDate;
+    const hours = Math.floor(durationMs / (1000 * 60 * 60));
+    return { hours };
 }

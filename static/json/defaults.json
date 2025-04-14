@@ -1,0 +1,32 @@
+{
+    "categories": {
+        "health": {
+            "name": "health",
+            "icon": "♥️"
+        },
+        "strength": {
+            "name": "strength",
+            "icon": "🏋"
+        }
+    },
+    "activities": {
+        "ride": {
+            "name": "ride",
+            "icon": "🚲",
+            "description": "bicycle ride",
+            "points": {
+                "health": 1,
+                "strength": 0
+            }
+        },
+        "play": {
+            "name": "play",
+            "icon": "⚽",
+            "description": "play a sport",
+            "points": {
+                "health": 1,
+                "strength": 0
+            }
+        }
+    }
+}
