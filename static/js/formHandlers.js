@@ -48,4 +48,4 @@ export function activityTemplateAdd(event) {
 
 export function resetForm(formId) {
   document.getElementById(formId).reset();
-}
+} 
