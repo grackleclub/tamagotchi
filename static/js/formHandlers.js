@@ -1,12 +1,6 @@
-import { displayActivities, populateOptions } from "./ui.js";
+import { activityTemplateList, populateOptions } from "./ui.js";
 
-export function handleSelectActivitySubmit(event) {
-  event.preventDefault();
-  resetForm("selectActivity");
-  console.log("Select Activity Form Submitted");
-}
-
-export function handleAddActivitySubmit(event) {
+export function activityTemplateAdd(event) {
   event.preventDefault();
 
   const activityName = document.getElementById("Name").value.trim();
@@ -47,11 +41,11 @@ export function handleAddActivitySubmit(event) {
     localStorage.setItem("activities", JSON.stringify(activities));
 
     resetForm("addActivity");
-    displayActivities();
+    activityTemplateList();
     populateOptions();
     alert("Activity added successfully!");
 }
 
 export function resetForm(formId) {
   document.getElementById(formId).reset();
-}
+} 

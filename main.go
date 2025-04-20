@@ -27,7 +27,10 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", handleRoot)
-	mux.Handle("/static/", customFileServer(http.FS(static)))
+	mux.Handle("/static/", handleStatic(http.FS(static)))
 	slog.Info("listen and serve", "address", fmt.Sprintf("http://localhost:%s", port))
-	http.ListenAndServe(fmt.Sprintf(":%s", port), mux)
+	err := http.ListenAndServe(fmt.Sprintf(":%s", port), mux)
+	if err != nil {
+		slog.Error("error starting server", "error", err)
+	}
 }
