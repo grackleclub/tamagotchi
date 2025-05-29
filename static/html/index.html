@@ -13,10 +13,15 @@
     <h1>{{ .Title }}</h1>
     <h2>Select below</h2>
     <form id="logCreate">
-      <select name="logItem" id="logItem">
+      <select class="field" name="logItem" id="logItem">
       </select>
-      <input type="submit" value="Submit">
+      <input class="btn" type="submit" value="Submit">
     </form>
+  </div>
+
+  <div>
+    <h2>Log</h2>
+    <ul id="logList"></ul>
   </div>
 
   <div>
@@ -25,17 +30,17 @@
     <input type="text" id="Name" name="Name" placeholder="Activity">
     <br>  
     <label>health</label>
-    <input type="number" id="health" name="health" placeholder="Points">
+    <input class="field" type="number" id="health" name="health" placeholder="Points">
     <br> 
     <label>education</label>
-    <input type="number" id="education" name="education" placeholder="Points">
+    <input class="field" type="number" id="education" name="education" placeholder="Points">
     <br> 
     <label>joy</label>
-    <input type="number" id="joy" name="joy" placeholder="Points">
+    <input class="field" type="number" id="joy" name="joy" placeholder="Points">
     <br> 
     <label>peace</label>
-    <input type="number" id="peace" name="peace" placeholder="Points">
-    <input type="submit" value="Add">
+    <input class="field" type="number" id="peace" name="peace" placeholder="Points">
+    <input class="btn" type="submit" value="Add">
   </form>
   <br> 
 </div>
@@ -47,7 +52,7 @@
 </div>
 
 <div>
-  <button id="clearStorage">Clear All Activities</button>
+  <button class="btn" id="clearStorage">Clear All Activities</button>
 </div>
 
 

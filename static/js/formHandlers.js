@@ -15,7 +15,7 @@ export function activityTemplateAdd(event) {
   }
 
   if (!health && !education && !joy && !peace) {
-    alert("Please enter at least one category.");
+    alert("Add a value to at least one category.");
     return;
   }
   

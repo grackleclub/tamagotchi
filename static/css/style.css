@@ -118,6 +118,31 @@ ol[class] {
   padding: 0;
 }
 
-h1 {
-  color:#9F7BD7
+/* begin custom styles */
+
+body {
+  font-family: var(--ff-sans);
+  color: var(--clr-text);
+  background-color: var(--clr-background);
+  padding: var(--spacer);
+}
+
+div {
+  margin: var(--spacer) 0;
+}
+
+.field {
+  font: inherit;
+  background-color: var(--clr-form-field);
+  border-radius: var(--br)/2;
+}
+
+.btn {
+  cursor: pointer;
+  margin: .25rem;
+  border: none;
+  border-radius: var(--br);
+  font-weight: var(--fw-700);
+  columns: var(--clr-background);
+  background-color: var(--clr-accent-200);
 }

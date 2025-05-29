@@ -41,6 +41,7 @@ function renderActivityTemplate(activity, index) {
 
   const removeButton = document.createElement("button");
   removeButton.textContent = "Remove";
+  removeButton.classList.add("btn");
   removeButton.dataset.index = index;
   removeButton.addEventListener("click", handleRemoveButtonClick);
 

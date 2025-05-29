@@ -23,7 +23,7 @@ export function logList() {
 export function logDelete() {
     console.log("Deleting log entry...");
     // TODO delete any "expired" log entries when storage is low
-    // and alert user if exceeing storage limit with non-expired activities
+    // and alert user if exceeding storage limit with non-expired activities
 }
 
 export function logInterpret() {
@@ -34,8 +34,8 @@ export function logInterpret() {
         console.log(`logged: ${log.activity} @ ${log.date}`);
     }
 
-    const activites = JSON.parse(localStorage.getItem("activities")) || [];
-    for (let activity of activites) {
+    const activities = JSON.parse(localStorage.getItem("activities")) || [];
+    for (let activity of activities) {
         console.log(`Activity: ${activity.name}`);
         for (let category of activity.categories) {
             console.log(`  - ${category.category}: ${category.points}`);
@@ -49,5 +49,30 @@ function hoursBetween(startTimestamp, endTimestamp) {
 
     const durationMs = endDate - startDate;
     const hours = Math.floor(durationMs / (1000 * 60 * 60));
-    return { hours };
+    const days = Math.floor(hours / 24);
+    return { hours, days };
+}
+
+export function renderLogList() {
+  const logList = document.getElementById("logList");
+  logList.innerHTML = "";
+
+  const logs = JSON.parse(localStorage.getItem("log")) || [];
+  if (logs.length === 0) {
+    logList.innerHTML = "<li>No log entries found</li>";
+    return;
+  }
+
+  logs.forEach(renderLogEntry);
+}
+
+function renderLogEntry(log) {
+  const logList = document.getElementById("logList");
+  const li = document.createElement("li");
+  const now = new Date().toISOString();
+  const { hours } = hoursBetween(log.date, now);
+  li.textContent = hours < 24
+    ? `${log.activity} - ${hours} hours ago`
+    : `${log.activity} - ${days} days ago`;
+  logList.appendChild(li);
 }
