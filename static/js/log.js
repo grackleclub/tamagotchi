@@ -63,16 +63,16 @@ export function renderLogList() {
     return;
   }
 
-  logs.forEach(renderLogEntry);
+  logs.slice().reverse().forEach(renderLogEntry);
 }
 
 function renderLogEntry(log) {
   const logList = document.getElementById("logList");
   const li = document.createElement("li");
   const now = new Date().toISOString();
-  const { hours } = hoursBetween(log.date, now);
+  const { hours, days } = hoursBetween(log.date, now);
   li.textContent = hours < 24
-    ? `${log.activity} - ${hours} hours ago`
-    : `${log.activity} - ${days} days ago`;
+    ? `${log.activity} : ${hours} hours ago`
+    : `${log.activity} : ${days} days ago`;
   logList.appendChild(li);
 }

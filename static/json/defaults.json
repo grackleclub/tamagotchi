@@ -4,9 +4,9 @@
             "name": "health",
             "icon": "♥️"
         },
-        "strength": {
-            "name": "strength",
-            "icon": "🏋"
+        "peace": {
+            "name": "peace",
+            "icon": "☮️"
         }
     },
     "activities": {
@@ -16,7 +16,7 @@
             "description": "bicycle ride",
             "points": {
                 "health": 1,
-                "strength": 0
+                "peace": 0
             }
         },
         "play": {
@@ -25,7 +25,16 @@
             "description": "play a sport",
             "points": {
                 "health": 1,
-                "strength": 0
+                "peace": 0
+            }
+        },
+        "meditate": {
+            "name": "meditate",
+            "icon": "🧘",
+            "description": "meditation session",
+            "points": {
+                "health": 0,
+                "peace": 1
             }
         }
     }

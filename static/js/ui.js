@@ -14,13 +14,30 @@ export function activityTemplateList() {
   activities.forEach(renderActivityTemplate);
 }
 
-export function populateOptions() {
+export async function populateOptions() {
   const selectMenu = document.getElementById("logItem");
   selectMenu.innerHTML = '<option value="">Select an activity</option>';
 
-  const activities = JSON.parse(localStorage.getItem("activities")) || [];
+  // Fetch default activities
+  let defaultActivities = [];
+  try {
+    const response = await fetch('/static/json/defaults.json');
+    const defaults = await response.json();
+    defaultActivities = Object.values(defaults.activities || {});
+  } catch (e) {
+    console.warn("Could not load default activities:", e);
+  }
 
-  activities.forEach(addOption);
+  // Get custom activities from localStorage
+  const customActivities = JSON.parse(localStorage.getItem("activities")) || [];
+
+  // Combine and deduplicate by name
+  const allActivities = [...defaultActivities, ...customActivities].reduce((acc, activity) => {
+    if (!acc.some(a => a.name === activity.name)) acc.push(activity);
+    return acc;
+  }, []);
+
+  allActivities.forEach(addOption);
 }
 
 function addOption(activity) {
