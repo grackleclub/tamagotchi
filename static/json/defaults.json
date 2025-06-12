@@ -14,28 +14,28 @@
             "name": "ride",
             "icon": "🚲",
             "description": "bicycle ride",
-            "points": {
-                "health": 1,
-                "peace": 0
-            }
+            "categories": [
+              {"category": "health", "points": 1},
+              {"category": "peace", "points": 0}  
+            ]
         },
         "play": {
             "name": "play",
             "icon": "⚽",
             "description": "play a sport",
-            "points": {
-                "health": 1,
-                "peace": 0
-            }
+            "categories": [
+              {"category": "health", "points": 1},
+              {"category": "peace", "points": 0}  
+            ]
         },
         "meditate": {
             "name": "meditate",
             "icon": "🧘",
             "description": "meditation session",
-            "points": {
-                "health": 0,
-                "peace": 1
-            }
+            "categories": [
+              {"category": "health", "points": 0},
+              {"category": "peace", "points": 1}  
+            ]
         }
     }
 }

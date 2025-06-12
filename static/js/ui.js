@@ -48,6 +48,69 @@ function addOption(activity) {
   selectMenu.appendChild(option);
 }
 
+export async function renderCategoryList() {
+  const categoryList = document.getElementById("categoryList");
+  categoryList.innerHTML = "";
+
+  let categories = {};
+  let defaultActivities = [];
+  try {
+    const response = await fetch('/static/json/defaults.json');
+    const defaults = await response.json();
+    categories = defaults.categories || {};
+    defaultActivities = Object.values(defaults.activities || {});
+  } catch (e) {
+    categoryList.innerHTML = "<li>Could not load categories.</li>";
+    console.warn("Could not load categories:", e);
+    return;
+  }
+
+  const customActivities = JSON.parse(localStorage.getItem("activities")) || [];
+  const allActivities = defaultActivities.concat(customActivities);
+
+  const activityMap = buildActivityMap(allActivities);
+
+  const logs = JSON.parse(localStorage.getItem("log")) || [];
+  const categoryCounts = countCategoriesInLogs(logs, activityMap);
+
+  Object.values(categories).forEach(renderCategoryCountItem.bind(null, categoryCounts, categoryList));
+}
+
+function buildActivityMap(activities) {
+  const map = {};
+  for (let i = 0; i < activities.length; i++) {
+    const activity = activities[i];
+    if (activity && activity.name) {
+      map[activity.name] = activity;
+    }
+  }
+  return map;
+}
+
+function countCategoriesInLogs(logs, activityMap) {
+  const counts = {};
+  for (let i = 0; i < logs.length; i++) {
+    const log = logs[i];
+    const activity = activityMap[log.activity];
+    if (activity && Array.isArray(activity.categories)) {
+      for (let j = 0; j < activity.categories.length; j++) {
+        const cat = activity.categories[j];
+        if (cat && cat.category) {
+          counts[cat.category] = (counts[cat.category] || 0) + (cat.points || 0);
+        }
+      }
+    }
+  }
+  return counts;
+}
+
+function renderCategoryCountItem(categoryCounts, categoryList, category) {
+  const li = document.createElement("li");
+  const count = categoryCounts[category.name] || 0;
+  li.textContent = `${category.icon ? category.icon + " " : ""}${category.name}: ${count}`;
+  categoryList.appendChild(li);
+}
+
 function renderActivityTemplate(activity, index) {
   const activityList = document.getElementById("activityList");
 

@@ -1,3 +1,5 @@
+import { renderCategoryList } from "./ui.js";
+
 // create a log entry and place in localStorage
 export function logCreate(event) {
     event.preventDefault();
@@ -12,6 +14,8 @@ export function logCreate(event) {
     )
     localStorage.setItem("log", JSON.stringify(logs));
     document.getElementById("logCreate").reset();
+    renderLogList();
+    renderCategoryList();
 }
 
 export function logList() {

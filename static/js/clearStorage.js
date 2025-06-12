@@ -1,3 +1,5 @@
+import { renderLogList } from "./log.js";
+
 export function removeActivity(index) {
   const activities = JSON.parse(localStorage.getItem("activities")) || [];
   activities.splice(index, 1);
@@ -12,5 +14,16 @@ export function clearLocalStorage() {
       console.log("localStorage cleared")
       alert("Local storage cleared!");
     }, 100);
+  }
+}
+
+export function clearLog() {
+  if (confirm("Are you sure you want to clear all log entries?")) {
+    localStorage.removeItem("log");
+    // Optionally update the UI if needed
+    if (typeof renderLogList === "function") {
+      renderLogList();
+    }
+    alert("Log cleared!");
   }
 }
