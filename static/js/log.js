@@ -1,11 +1,12 @@
 import { renderCategoryList } from "./ui.js";
+import { DEBUG } from "./config.js";
 
 // create a log entry and place in localStorage
 export function logCreate(event) {
     event.preventDefault();
     const logs = JSON.parse(localStorage.getItem("log")) || [];
     const activityName = document.getElementById("logItem").value.trim();
-    console.log(`logging activity: ${activityName}`);
+    if (DEBUG) console.log(`logging activity: ${activityName}`);
     logs.push(
         {
             activity: activityName,
@@ -19,30 +20,30 @@ export function logCreate(event) {
 }
 
 export function logList() {
-    console.log("Displaying log entries...");
+    if (DEBUG) console.log("Displaying log entries...");
     const logs = JSON.parse(localStorage.getItem("log")) || [];
-    console.log(logs);
+    if (DEBUG) console.log(logs);
 }
 
 export function logDelete() {
-    console.log("Deleting log entry...");
+    if (DEBUG) console.log("Deleting log entry...");
     // TODO delete any "expired" log entries when storage is low
     // and alert user if exceeding storage limit with non-expired activities
 }
 
 export function logInterpret() {
-    console.log("Interpreting log entries...");
+    if (DEBUG) console.log("Interpreting log entries...");
     // TODO interpret log entries and display results
     const logs = JSON.parse(localStorage.getItem("log")) || [];
     for (let log of logs) {
-        console.log(`logged: ${log.activity} @ ${log.date}`);
+        if (DEBUG) console.log(`logged: ${log.activity} @ ${log.date}`);
     }
 
     const activities = JSON.parse(localStorage.getItem("activities")) || [];
     for (let activity of activities) {
-        console.log(`Activity: ${activity.name}`);
+        if (DEBUG) console.log(`Activity: ${activity.name}`);
         for (let category of activity.categories) {
-            console.log(`  - ${category.category}: ${category.points}`);
+            if (DEBUG) console.log(`  - ${category.category}: ${category.points}`);
         }
     }
 }

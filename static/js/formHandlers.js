@@ -10,7 +10,7 @@ export function activityTemplateAdd(event) {
   const peace = document.getElementById("peace").value.trim();
 
   if (!activityName) {
-    alert("Please enter an activity name.");
+    alert("Enter an activity name.");
     return;
   }
 
@@ -23,7 +23,7 @@ export function activityTemplateAdd(event) {
   
   const existingActivity = activities.some(activity => activity.name.toLowerCase() === activityName.toLowerCase());
   if (existingActivity) {
-    alert("That activity exists. Please choose a different name.");
+    alert("That activity exists. Choose a different name.");
     return;
   }
 
