@@ -38,6 +38,13 @@ func handleRoot(w http.ResponseWriter, r *http.Request) {
 func handleStatic(fs http.FileSystem) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ext := filepath.Ext(r.URL.Path)
+		if ext == "test" {
+			slog.Warn(
+				"rejecting request for test file",
+				"path", r.URL.Path,
+			)
+			http.Error(w, "forbidden", http.StatusForbidden)
+		}
 		mimeType := mime.TypeByExtension(ext)
 		slog.Info("request for mime type", "ext", ext, "mimeType", mimeType)
 		if mimeType != "" {

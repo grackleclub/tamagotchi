@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+error() {
+    if [ -z "$NO_COLOR" ]; then
+        echo -e "\033[31merror\033[0m: $1"
+    else
+        echo "error: $1"
+    fi
+	exit 1
+}
+
+# require node
+if ! command -v node &> /dev/null; then
+	error "node required, install and try again"
+fi
+
+# require npm
+if ! command -v npm &> /dev/null; then
+	error "npm required, install and try again"
+fi
+
+# check for existing tape
+if command -v tape &> /dev/null; then
+	echo "tape already installed, skipping"
+	exit 0
+fi
+
+# install tape
+if ! npm install -g tape; then
+	error "failed to install tape"
+fi

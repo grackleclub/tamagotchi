@@ -14,7 +14,7 @@ var (
 	defaultPort = "8006"
 )
 
-//go:embed static
+//go:embed static/html/* static/css/* static/js/* static/json/*
 var static embed.FS
 
 func main() {
