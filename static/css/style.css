@@ -143,6 +143,6 @@ div {
   border: none;
   border-radius: var(--br);
   font-weight: var(--fw-700);
-  columns: var(--clr-background);
+  color: var(--clr-background);
   background-color: var(--clr-accent-200);
 }

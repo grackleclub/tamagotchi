@@ -3,6 +3,7 @@ import { DEBUG } from "./config.js";
 
 // create a log entry and place in localStorage
 export function logCreate(event) {
+    pruneOldLogs();
     event.preventDefault();
     const logs = JSON.parse(localStorage.getItem("log")) || [];
     const activityName = document.getElementById("logItem").value.trim();
@@ -58,17 +59,30 @@ function hoursBetween(startTimestamp, endTimestamp) {
     return { hours, days };
 }
 
+export function isRecentLog(log) {
+    const now = new Date();
+    const logDate = new Date(log.date);
+    const diffDays = (now - logDate) / (1000 * 60 * 60 * 24);
+    return diffDays < 8; // Consider logs recent if they are less than 8 days old
+}
+
 export function renderLogList() {
   const logList = document.getElementById("logList");
   logList.innerHTML = "";
 
   const logs = JSON.parse(localStorage.getItem("log")) || [];
+  const now = new Date();
+
+  isRecentLog(logs)
+  
+  const recentLogs = logs.filter(isRecentLog);
+  
   if (logs.length === 0) {
     logList.innerHTML = "<li>No log entries found</li>";
     return;
   }
 
-  logs.slice().reverse().forEach(renderLogEntry);
+  recentLogs.slice().reverse().forEach(renderLogEntry);
 }
 
 function renderLogEntry(log) {
@@ -80,4 +94,21 @@ function renderLogEntry(log) {
     ? `${log.activity} : ${hours} hours ago`
     : `${log.activity} : ${days} days ago`;
   logList.appendChild(li);
+}
+
+function isFreshLog(log, now) {
+  const logDate = new Date(log.date);
+  const diffDays = (now - logDate) / (1000 * 60 * 60 * 24);
+  return diffDays < 366;
+}
+
+export function pruneOldLogs() {
+  const logs = JSON.parse(localStorage.getItem("log")) || [];
+  const now = new Date();
+
+  const freshLogs = logs.filter(log => isFreshLog(log, now));
+
+  if (freshLogs.length !== logs.length) {
+    localStorage.setItem("log", JSON.stringify(freshLogs));
+  }
 }

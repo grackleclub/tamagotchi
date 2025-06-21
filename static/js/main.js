@@ -1,7 +1,7 @@
 import { activityTemplateAdd, resetForm } from "./formHandlers.js";
 import { clearLocalStorage, clearLog } from "./clearStorage.js";
 import { activityTemplateList, populateOptions, renderCategoryList } from "./ui.js";
-import { logCreate, logInterpret, logList, renderLogList } from "./log.js";
+import { logCreate, logInterpret, logList, renderLogList, pruneOldLogs } from "./log.js";
 import { fetchDefaults, usage } from "./storage.js"; 
 import { DEBUG } from "./config.js";
 
@@ -21,6 +21,7 @@ function clearLocalStorageClick() {
 function initializeApp() {
   resetForm("logCreate");
   resetForm("addActivity");
+  pruneOldLogs();
   activityTemplateList();
   populateOptions();
   renderLogList();

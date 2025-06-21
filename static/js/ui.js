@@ -1,4 +1,5 @@
 import { removeActivity } from "./clearStorage.js";
+import { isRecentLog } from "./log.js";
 
 export function activityTemplateList() {
   const activityList = document.getElementById("activityList");
@@ -71,9 +72,29 @@ export async function renderCategoryList() {
   const activityMap = buildActivityMap(allActivities);
 
   const logs = JSON.parse(localStorage.getItem("log")) || [];
-  const categoryCounts = countCategoriesInLogs(logs, activityMap);
+  const now = new Date();
+  const recentlogs = logs.filter(log => isRecentLog(log, now));
+  const categoryCounts = countCategoriesInLogs(recentlogs, activityMap);
 
   Object.values(categories).forEach(renderCategoryCountItem.bind(null, categoryCounts, categoryList));
+  updateLittleGuy(categoryCounts);
+}
+
+function updateLittleGuy(categoryCounts) {
+  const littleGuy = document.getElementById("littleGuy");
+  if (!littleGuy) return;
+
+  const health = categoryCounts["health"] || 0;
+  const peace = categoryCounts["peace"] || 0;
+
+  if (health > 2 && peace > 2) {
+    littleGuy.textContent = "😊";
+  } else if (health > 0 || peace > 0) {
+    littleGuy.textContent = "😐";
+  } else if (health === 0 && peace === 0) {
+    littleGuy.textContent = "😢";
+  } else {
+    littleGuy.textContent = "🫥";}  
 }
 
 function buildActivityMap(activities) {

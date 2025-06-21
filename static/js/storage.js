@@ -25,7 +25,7 @@ export function fetchDefaults() {
                 localStorage.setItem("defaults", JSON.stringify(data));
                 if (DEBUG) console.log("Defaults successfully fetched and stored in localStorage:", data);
             } else {
-                throw new Error("Invalid JSON structure: Expected a non-empty array.");
+                throw new Error("Invalid JSON structure: Expected a non-empty object.");
             }
         })
         .catch(error => {
