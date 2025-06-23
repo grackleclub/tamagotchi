@@ -1,3 +1,4 @@
+import { renderArchivedLogTable } from "./log.js";
 import { activityTemplateList, populateOptions } from "./ui.js";
 
 export function activityTemplateAdd(event) {
@@ -48,4 +49,18 @@ export function activityTemplateAdd(event) {
 
 export function resetForm(formId) {
   document.getElementById(formId).reset();
-} 
+}
+
+export function toggleArchived(event) {
+  event.preventDefault();
+
+  const table = document.getElementById("archivedLogTable");
+  if (table.style.display === "none") {
+    renderArchivedLogTable();
+    table.style.display = "block";
+    this.textContent = "Hide All Logs";
+  } else {
+    table.style.display = "none";
+    this.textContent = "Show All Logs";
+  }
+}

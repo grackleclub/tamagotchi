@@ -1,4 +1,4 @@
-import { activityTemplateAdd, resetForm } from "./formHandlers.js";
+import { activityTemplateAdd, resetForm, toggleArchived } from "./formHandlers.js";
 import { clearLocalStorage, clearLog } from "./clearStorage.js";
 import { activityTemplateList, populateOptions, renderCategoryList } from "./ui.js";
 import { logCreate, logInterpret, logList, renderLogList, pruneOldLogs } from "./log.js";
@@ -10,8 +10,10 @@ function addEventListeners() {
   document.getElementById("clearStorage").addEventListener("click", clearLocalStorageClick);
   document.getElementById("logCreate").addEventListener("submit", logCreate);
   document.getElementById("clearLog").addEventListener("click", clearLog);
+  document.getElementById("toggleArchived").addEventListener("click", toggleArchived);
 }
 
+// Clears local storage and refreshes the activity list and options
 function clearLocalStorageClick() {
   clearLocalStorage();
   activityTemplateList();
@@ -32,7 +34,7 @@ function initializeApp() {
 document.addEventListener("DOMContentLoaded", initializeApp);
 if (DEBUG) console.log("App initialized");
 
-// print some basic debug information to the console after load
+// prints some basic debug information to the console after load
 logList();
 logInterpret();
 
@@ -40,4 +42,5 @@ logInterpret();
 const used = usage();
 if (DEBUG) console.log(`Used storage: ${used}%`);
 
+// Fetches default activities and categories
 fetchDefaults();

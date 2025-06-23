@@ -34,7 +34,6 @@ export function logDelete() {
 
 export function logInterpret() {
     if (DEBUG) console.log("Interpreting log entries...");
-    // TODO interpret log entries and display results
     const logs = JSON.parse(localStorage.getItem("log")) || [];
     for (let log of logs) {
         if (DEBUG) console.log(`logged: ${log.activity} @ ${log.date}`);
@@ -63,7 +62,7 @@ export function isRecentLog(log) {
     const now = new Date();
     const logDate = new Date(log.date);
     const diffDays = (now - logDate) / (1000 * 60 * 60 * 24);
-    return diffDays < 8; // Consider logs recent if they are less than 8 days old
+    return diffDays < 8; 
 }
 
 export function renderLogList() {
@@ -71,9 +70,6 @@ export function renderLogList() {
   logList.innerHTML = "";
 
   const logs = JSON.parse(localStorage.getItem("log")) || [];
-  const now = new Date();
-
-  isRecentLog(logs)
   
   const recentLogs = logs.filter(isRecentLog);
   
@@ -84,6 +80,7 @@ export function renderLogList() {
 
   recentLogs.slice().reverse().forEach(renderLogEntry);
 }
+
 
 function renderLogEntry(log) {
   const logList = document.getElementById("logList");
@@ -96,17 +93,57 @@ function renderLogEntry(log) {
   logList.appendChild(li);
 }
 
-function isFreshLog(log, now) {
+function isArchivedLog(log, now) {
   const logDate = new Date(log.date);
   const diffDays = (now - logDate) / (1000 * 60 * 60 * 24);
   return diffDays < 366;
 }
 
+function renderArchivedLogRow(log, now, archivedLogBody) {
+  const logDate = new Date(log.date);
+  const diffDays = Math.floor((now - logDate) / (1000 * 60 * 60 * 24));
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${log.activity}</td>
+    <td>${logDate.toLocaleDateString()}</td>
+    <td>${diffDays} days ago</td>`;
+  archivedLogBody.appendChild(tr);
+}
+
+export function renderArchivedLogTable() {
+  // const archivedLogTable = document.getElementById("archivedLogTable");
+  const archivedLogBody = document.getElementById("archivedLogBody");
+  archivedLogBody.innerHTML = "";
+
+  const logs = JSON.parse(localStorage.getItem("log")) || [];
+  const now = new Date();
+
+  function filterArchived(log) {
+    return isArchivedLog(log, now);
+  }
+
+  function compareByDateDesc(a, b) {
+    return new Date(b.date) - new Date(a.date);
+  }
+
+  const archivedLogs = logs.filter(filterArchived);
+
+
+  if (archivedLogs.length === 0) {
+    archivedLogBody.innerHTML = "<tr><td colspan='3'>No archived log entries found</td></tr>";
+    return;
+  }
+
+  archivedLogs.sort(compareByDateDesc);
+  archivedLogs.forEach(log => renderArchivedLogRow(log, now, archivedLogBody));
+}
+
+// Deletes logs older than 1 year
 export function pruneOldLogs() {
   const logs = JSON.parse(localStorage.getItem("log")) || [];
   const now = new Date();
 
-  const freshLogs = logs.filter(log => isFreshLog(log, now));
+  const freshLogs = logs.filter(log => isArchivedLog(log, now));
 
   if (freshLogs.length !== logs.length) {
     localStorage.setItem("log", JSON.stringify(freshLogs));
