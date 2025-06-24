@@ -58,7 +58,7 @@ export function toggleArchived(event) {
   if (table.style.display === "none") {
     renderArchivedLogTable();
     table.style.display = "block";
-    this.textContent = "Hide All Logs";
+    this.textContent = "Hide Logs";
   } else {
     table.style.display = "none";
     this.textContent = "Show All Logs";

@@ -1,4 +1,5 @@
 import { renderCategoryList } from "./ui.js";
+import { usage } from "./storage.js";
 import { DEBUG } from "./config.js";
 
 // create a log entry and place in localStorage
@@ -24,6 +25,7 @@ export function logCreate(event) {
     document.getElementById("logCreate").reset();
     renderLogList();
     renderCategoryList();
+    logDelete();
 }
 
 export function logList() {
@@ -34,8 +36,20 @@ export function logList() {
 
 export function logDelete() {
     if (DEBUG) console.log("Deleting log entry...");
-    // TODO delete any "expired" log entries when storage is low
-    // and alert user if exceeding storage limit with non-expired activities
+    const percentUsed = usage();
+    if (percentUsed < 95) {
+      return;
+    }
+
+    alert("Local storage is almost full. Deleting 20 oldest log entries.");
+
+    let logs = JSON.parse(localStorage.getItem("log")) || [];
+    if (logs.length > 0) {
+      logs = logs.slice(20);
+      localStorage.setItem("log", JSON.stringify(logs));
+      renderLogList();
+      renderCategoryList();
+    }
 }
 
 export function logInterpret() {
@@ -117,7 +131,6 @@ function renderArchivedLogRow(log, now, archivedLogBody) {
 }
 
 export function renderArchivedLogTable() {
-  // const archivedLogTable = document.getElementById("archivedLogTable");
   const archivedLogBody = document.getElementById("archivedLogBody");
   archivedLogBody.innerHTML = "";
 
