@@ -7,6 +7,12 @@ export function logCreate(event) {
     event.preventDefault();
     const logs = JSON.parse(localStorage.getItem("log")) || [];
     const activityName = document.getElementById("logItem").value.trim();
+
+    if (!activityName) {
+        alert("Please select an activity to log.");
+        return;
+    }
+
     if (DEBUG) console.log(`logging activity: ${activityName}`);
     logs.push(
         {
