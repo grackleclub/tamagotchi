@@ -1,6 +1,9 @@
 import { removeActivity } from "./clearStorage.js";
 import { isRecentLog } from "./log.js";
 
+const GOAL = 2;
+const NEUTRAL = 0;
+
 export function activityTemplateList() {
   const activityList = document.getElementById("activityList");
   activityList.innerHTML = "";
@@ -73,8 +76,8 @@ export async function renderCategoryList() {
 
   const logs = JSON.parse(localStorage.getItem("log")) || [];
   const now = new Date();
-  const recentlogs = logs.filter(log => isRecentLog(log, now));
-  const categoryCounts = countCategoriesInLogs(recentlogs, activityMap);
+  const recentLogs = logs.filter(log => isRecentLog(log, now));
+  const categoryCounts = countCategoriesInLogs(recentLogs, activityMap);
 
   Object.values(categories).forEach(renderCategoryCountItem.bind(null, categoryCounts, categoryList));
   updateLittleGuy(categoryCounts);
@@ -87,11 +90,11 @@ function updateLittleGuy(categoryCounts) {
   const health = categoryCounts["health"] || 0;
   const peace = categoryCounts["peace"] || 0;
 
-  if (health > 2 && peace > 2) {
+  if (health > GOAL && peace > GOAL) {
     littleGuy.textContent = "😊";
-  } else if (health > 0 || peace > 0) {
+  } else if (health > NEUTRAL || peace > NEUTRAL) {
     littleGuy.textContent = "😐";
-  } else if (health === 0 && peace === 0) {
+  } else if (health === NEUTRAL && peace === NEUTRAL) {
     littleGuy.textContent = "😢";
   } else {
     littleGuy.textContent = "🫥";}  

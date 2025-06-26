@@ -35,8 +35,8 @@ document.addEventListener("DOMContentLoaded", initializeApp);
 if (DEBUG) console.log("App initialized");
 
 // prints some basic debug information to the console after load
-logList();
-logInterpret();
+if (DEBUG) logList();
+if (DEBUG) logInterpret();
 
 
 const used = usage();

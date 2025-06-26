@@ -55,12 +55,13 @@ export function toggleArchived(event) {
   event.preventDefault();
 
   const table = document.getElementById("archivedLogTable");
+  const button = event.currentTarget;
   if (table.style.display === "none") {
     renderArchivedLogTable();
     table.style.display = "block";
-    this.textContent = "Hide Logs";
+    button.textContent = "Hide Logs";
   } else {
     table.style.display = "none";
-    this.textContent = "Show All Logs";
+    button.textContent = "Show All Logs";
   }
 }

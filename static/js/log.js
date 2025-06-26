@@ -93,8 +93,8 @@ export function renderLogList() {
   
   const recentLogs = logs.filter(isRecentLog);
   
-  if (logs.length === 0) {
-    logList.innerHTML = "<li>No log entries found</li>";
+  if (recentLogs.length === 0) {
+    logList.innerHTML = "<li>No recent log entries found</li>";
     return;
   }
 

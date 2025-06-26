@@ -12,23 +12,38 @@ export function usage() {
 
 export function fetchDefaults() {
     fetch(defaultPath)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Failed to fetch defaults at ${defaultPath}: ${response.status} ${response.statusText}`);
-            }
-            return response.json(); // Parse the response as JSON
-        })
-        .then(data => {
-            if (data) {
-                // TODO add each item to localStorage if len(logs) > 0 (first time user)
-                // TODO don't use defaults
-                localStorage.setItem("defaults", JSON.stringify(data));
-                if (DEBUG) console.log("Defaults successfully fetched and stored in localStorage:", data);
-            } else {
-                throw new Error("Invalid JSON structure: Expected a non-empty object.");
-            }
-        })
-        .catch(error => {
-            console.error("Error fetching or processing defaults.json:", error);
-        });
+        .then(handleResponce)
+        .then(processDefaults)
+        .catch(handleFetchError);
+}
+
+function handleResponce(response) {
+    if (!response.ok) {
+        throw new Error(`Failed to fetch defaults at ${defaultPath}: ${response.status} ${response.statusText}`);
+    }
+    return response.json();
+}
+
+function processDefaults(data) {
+    if (!data) {
+      throw new Error("Invalid JSON structure: Expected non-empty object.");
+    }
+    localStorage.setItem("defaults", JSON.stringify(data));
+    const logs = JSON.parse(localStorage.getItem("log")) || [];
+    if (logs.length === 0) {
+        if (data.activities) {
+            localStorage.setItem("activities", JSON.stringify(Object.values(data.activities)));
+        }
+        if (data.categories) {
+            localStorage.setItem("categories", JSON.stringify(data.categories));
+        }
+        if (DEBUG) console.log("Defaults loaded for first-time user:", data);
+    } else if (DEBUG) {
+        console.log("Logs in place, not overwriting with defaults:");
+    }
+    if (DEBUG) console.log("Defaults processed and stored in localStorage:", data);
+}
+
+function handleFetchError(error) {
+    console.error("Error fetching or processing defaults:", error);
 }
