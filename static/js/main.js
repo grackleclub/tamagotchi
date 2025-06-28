@@ -21,6 +21,7 @@ function clearLocalStorageClick() {
 }
 
 function initializeApp() {
+  fetchDefaults();
   resetForm("logCreate");
   resetForm("addActivity");
   pruneOldLogs();
@@ -41,6 +42,3 @@ if (DEBUG) logInterpret();
 
 const used = usage();
 if (DEBUG) console.log(`Used storage: ${used}%`);
-
-// Fetches default activities and categories
-fetchDefaults();

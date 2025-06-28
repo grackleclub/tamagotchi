@@ -22,17 +22,9 @@ export async function populateOptions() {
   const selectMenu = document.getElementById("logItem");
   selectMenu.innerHTML = '<option value="">Select an activity</option>';
 
-  // Fetch default activities
-  let defaultActivities = [];
-  try {
-    const response = await fetch('/static/json/defaults.json');
-    const defaults = await response.json();
-    defaultActivities = Object.values(defaults.activities || {});
-  } catch (e) {
-    console.warn("Could not load default activities:", e);
-  }
-
-  // Get custom activities from localStorage
+  // Use cached defaults
+  const defaults = JSON.parse(localStorage.getItem("defaults")) || {};
+  const defaultActivities = Object.values(defaults.activities || {});
   const customActivities = JSON.parse(localStorage.getItem("activities")) || [];
 
   // Combine and deduplicate by name
@@ -56,27 +48,17 @@ export async function renderCategoryList() {
   const categoryList = document.getElementById("categoryList");
   categoryList.innerHTML = "";
 
-  let categories = {};
-  let defaultActivities = [];
-  try {
-    const response = await fetch('/static/json/defaults.json');
-    const defaults = await response.json();
-    categories = defaults.categories || {};
-    defaultActivities = Object.values(defaults.activities || {});
-  } catch (e) {
-    categoryList.innerHTML = "<li>Could not load categories.</li>";
-    console.warn("Could not load categories:", e);
-    return;
-  }
-
+  // Use cached defaults
+  const defaults = JSON.parse(localStorage.getItem("defaults")) || {};
+  const categories = defaults.categories || {};
+  const defaultActivities = Object.values(defaults.activities || {});
   const customActivities = JSON.parse(localStorage.getItem("activities")) || [];
   const allActivities = defaultActivities.concat(customActivities);
 
   const activityMap = buildActivityMap(allActivities);
 
   const logs = JSON.parse(localStorage.getItem("log")) || [];
-  const now = new Date();
-  const recentLogs = logs.filter(log => isRecentLog(log, now));
+  const recentLogs = logs.filter(log => isRecentLog(log));
   const categoryCounts = countCategoriesInLogs(recentLogs, activityMap);
 
   Object.values(categories).forEach(renderCategoryCountItem.bind(null, categoryCounts, categoryList));
