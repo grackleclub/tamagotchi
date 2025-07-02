@@ -1,4 +1,4 @@
-import { renderLogList } from "./log.js";
+import { renderRecordList } from "./record.js";
 
 export function removeActivity(index) {
   const activities = JSON.parse(localStorage.getItem("activities")) || [];
@@ -9,7 +9,6 @@ export function removeActivity(index) {
 export function clearLocalStorage() {
   if (confirm("Are you sure you want to permanently clear all data?")) {
     localStorage.clear();
-    // introduce a delay to make the change more apparent
     setTimeout(() => {
       console.log("localStorage cleared")
       alert("Local storage cleared!");
@@ -17,13 +16,12 @@ export function clearLocalStorage() {
   }
 }
 
-export function clearLog() {
-  if (confirm("Are you sure you want to clear all log entries?")) {
-    localStorage.removeItem("log");
-    // Optionally update the UI if needed
-    if (typeof renderLogList === "function") {
-      renderLogList();
+export function clearRecords() {
+  if (confirm("Are you sure you want to clear all recorded entries?")) {
+    localStorage.removeItem("record");
+    if (typeof renderRecordList === "function") {
+      renderRecordList();
     }
-    alert("Log cleared!");
+    alert("Records cleared!");
   }
 }

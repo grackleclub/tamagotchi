@@ -12,8 +12,8 @@
   <div id="pick">
     <h1>{{ .Title }}</h1>
     <h2>Select below</h2>
-    <form id="logCreate">
-      <select class="field" name="logItem" id="logItem">
+    <form id="recordCreate">
+      <select class="field" name="recordItem" id="recordItem">
       </select>
       <input class="btn" type="submit" value="Submit">
     </form>
@@ -30,14 +30,14 @@
   </div>
 
   <div>
-    <h2>Log</h2>
-    <ul id="logList"></ul>
-    <button class="btn" id="clearLog" type="button">Clear Log</button>
+    <h2>Record</h2>
+    <ul id="recordList"></ul>
+    <button class="btn" id="clearRecord" type="button">Clear Record</button>
   </div>
 
   <div>
-    <button class="btn" id="toggleArchived" type="button">Show All Logs</button>
-    <table id="archivedLogTable" style="display: none;">
+    <button class="btn" id="toggleArchived" type="button">Show All Records</button>
+    <table id="archivedRecordTable" style="display: none;">
       <thead>
         <tr>
           <th>Activity</th>
@@ -45,7 +45,7 @@
           <th>Age</th>
         </tr>
       </thead>
-      <tbody id="archivedLogBody"></tbody>
+      <tbody id="archivedRecordBody"></tbody>
     </table>
   </div>
 

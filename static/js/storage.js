@@ -12,12 +12,12 @@ export function usage() {
 
 export function fetchDefaults() {
     fetch(defaultPath)
-        .then(handleResponce)
+        .then(handleResponse)
         .then(processDefaults)
         .catch(handleFetchError);
 }
 
-function handleResponce(response) {
+function handleResponse(response) {
     if (!response.ok) {
         throw new Error(`Failed to fetch defaults at ${defaultPath}: ${response.status} ${response.statusText}`);
     }
@@ -28,9 +28,12 @@ function processDefaults(data) {
     if (!data) {
       throw new Error("Invalid JSON structure: Expected non-empty object.");
     }
+
     localStorage.setItem("defaults", JSON.stringify(data));
-    const logs = JSON.parse(localStorage.getItem("log")) || [];
-    if (logs.length === 0) {
+
+    const records = JSON.parse(localStorage.getItem("records")) || [];
+    
+    if (records.length === 0) {
         if (data.activities) {
             localStorage.setItem("activities", JSON.stringify(Object.values(data.activities)));
         }
@@ -39,7 +42,7 @@ function processDefaults(data) {
         }
         if (DEBUG) console.log("Defaults loaded for first-time user:", data);
     } else if (DEBUG) {
-        console.log("Logs in place, not overwriting with defaults:");
+        console.log("Records in place, not overwriting with defaults:");
     }
     if (DEBUG) console.log("Defaults processed and stored in localStorage:", data);
 }

@@ -1,4 +1,4 @@
-import { renderArchivedLogTable } from "./log.js";
+import { renderArchivedRecordTable } from "./record.js";
 import { activityTemplateList, populateOptions } from "./ui.js";
 
 export function activityTemplateAdd(event) {
@@ -39,6 +39,7 @@ export function activityTemplateAdd(event) {
   };
 
     activities.push(activity);
+    console.log(`Adding activity: ${activityName}`, activity);
     localStorage.setItem("activities", JSON.stringify(activities));
 
     resetForm("addActivity");
@@ -54,14 +55,14 @@ export function resetForm(formId) {
 export function toggleArchived(event) {
   event.preventDefault();
 
-  const table = document.getElementById("archivedLogTable");
+  const table = document.getElementById("archivedRecordTable");
   const button = event.currentTarget;
   if (table.style.display === "none") {
-    renderArchivedLogTable();
+    renderArchivedRecordTable();
     table.style.display = "block";
-    button.textContent = "Hide Logs";
+    button.textContent = "Hide Records";
   } else {
     table.style.display = "none";
-    button.textContent = "Show All Logs";
+    button.textContent = "Show All Records";
   }
 }

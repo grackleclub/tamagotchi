@@ -1,5 +1,5 @@
 import { removeActivity } from "./clearStorage.js";
-import { isRecentLog } from "./log.js";
+import { isRecentRecord } from "./record.js";
 
 const GOAL = 2;
 const NEUTRAL = 0;
@@ -19,7 +19,7 @@ export function activityTemplateList() {
 }
 
 export async function populateOptions() {
-  const selectMenu = document.getElementById("logItem");
+  const selectMenu = document.getElementById("recordItem");
   selectMenu.innerHTML = '<option value="">Select an activity</option>';
 
   // Use cached defaults
@@ -37,7 +37,7 @@ export async function populateOptions() {
 }
 
 function addOption(activity) {
-  const selectMenu = document.getElementById("logItem");
+  const selectMenu = document.getElementById("recordItem");
   const option = document.createElement("option");
   option.value = activity.name;
   option.textContent = activity.name;
@@ -57,9 +57,9 @@ export async function renderCategoryList() {
 
   const activityMap = buildActivityMap(allActivities);
 
-  const logs = JSON.parse(localStorage.getItem("log")) || [];
-  const recentLogs = logs.filter(log => isRecentLog(log));
-  const categoryCounts = countCategoriesInLogs(recentLogs, activityMap);
+  const records = JSON.parse(localStorage.getItem("records")) || [];
+  const recentRecords = records.filter(record => isRecentRecord(record));
+  const categoryCounts = countCategoriesInRecords(recentRecords, activityMap);
 
   Object.values(categories).forEach(renderCategoryCountItem.bind(null, categoryCounts, categoryList));
   updateLittleGuy(categoryCounts);
@@ -93,11 +93,11 @@ function buildActivityMap(activities) {
   return map;
 }
 
-function countCategoriesInLogs(logs, activityMap) {
+function countCategoriesInRecords(records, activityMap) {
   const counts = {};
-  for (let i = 0; i < logs.length; i++) {
-    const log = logs[i];
-    const activity = activityMap[log.activity];
+  for (let i = 0; i < records.length; i++) {
+    const record = records[i];
+    const activity = activityMap[record.activity];
     if (activity && Array.isArray(activity.categories)) {
       for (let j = 0; j < activity.categories.length; j++) {
         const cat = activity.categories[j];
