@@ -1,0 +1,16 @@
+{
+  "categories": {
+    "health": {
+      "name": "health",
+      "icon": "♥️"
+    },
+    "peace": {
+      "name": "peace",
+      "icon": "☮️"
+    },
+    "education": {
+      "name": "education",
+      "icon": "📚"
+    }
+  }
+}

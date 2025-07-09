@@ -1,4 +1,4 @@
-import { activityTemplateAdd, resetForm, toggleArchived } from "./formHandlers.js";
+import { activityTemplateAdd, resetForm, toggleArchived, renderAddActivityFields } from "./formHandlers.js";
 import { clearLocalStorage, clearRecords } from "./clearStorage.js";
 import { activityTemplateList, populateOptions, renderCategoryList } from "./ui.js";
 import { recordCreate, recordInterpret, recordList, renderRecordList, pruneOldRecords } from "./record.js";
@@ -20,10 +20,11 @@ function clearLocalStorageClick() {
   populateOptions();
 }
 
-function initializeApp() {
-  fetchDefaults();
+async function initializeApp() {
+  await fetchDefaults();
   resetForm("recordCreate");
   resetForm("addActivity");
+  renderAddActivityFields();
   pruneOldRecords();
   activityTemplateList();
   populateOptions();

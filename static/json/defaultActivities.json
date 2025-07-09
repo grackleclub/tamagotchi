@@ -1,0 +1,34 @@
+{
+  "activities": {
+      "ride": {
+          "name": "ride",
+          "icon": "🚲",
+          "description": "bicycle ride",
+          "categories": [
+            {"category": "health", "points": 1},
+            {"category": "peace", "points": 0},
+            {"category": "education", "points": 0}
+          ]
+      },
+      "play": {
+          "name": "play",
+          "icon": "⚽",
+          "description": "play a sport",
+          "categories": [
+            {"category": "health", "points": 1},
+            {"category": "peace", "points": 0},
+            {"category": "education", "points": 0}  
+          ]
+      },
+      "meditate": {
+          "name": "meditate",
+          "icon": "🧘",
+          "description": "meditation session",
+          "categories": [
+            {"category": "health", "points": 0},
+            {"category": "peace", "points": 1},
+            {"category": "education", "points": 0}
+          ]
+      }
+  }
+}

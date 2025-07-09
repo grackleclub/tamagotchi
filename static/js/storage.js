@@ -1,6 +1,7 @@
 import { DEBUG } from "./config.js";
 
-const defaultPath = "/static/json/defaults.json";
+const activitiesPath = "/static/json/defaultActivities.json";
+const categoriesPath = "/static/json/defaultCategories.json";
 
 export function usage() {
     const totalBytes = new Blob(Object.values(localStorage)).size;
@@ -11,41 +12,40 @@ export function usage() {
 }
 
 export function fetchDefaults() {
-    fetch(defaultPath)
+    const activitiesPromise = fetch(activitiesPath)
         .then(handleResponse)
-        .then(processDefaults)
+        .then(processActivities)
+
+    const categoriesPromise = fetch(categoriesPath)
+        .then(handleResponse)
+        .then(processCategories)
+  
+        return Promise.all([activitiesPromise, categoriesPromise])
         .catch(handleFetchError);
-}
+      }
 
 function handleResponse(response) {
     if (!response.ok) {
-        throw new Error(`Failed to fetch defaults at ${defaultPath}: ${response.status} ${response.statusText}`);
+        throw new Error(`Failed to fetch defaults at ${activitiesPath}, ${categoriesPath}: ${response.status} ${response.statusText}`);
     }
     return response.json();
 }
 
-function processDefaults(data) {
-    if (!data) {
-      throw new Error("Invalid JSON structure: Expected non-empty object.");
-    }
-
-    localStorage.setItem("defaults", JSON.stringify(data));
-
+function processActivities(data) {
+    if (!data) throw new Error("Invalid activitie JSON");
+    localStorage.setItem("defaultActivities", JSON.stringify(data));
     const records = JSON.parse(localStorage.getItem("records")) || [];
-    
-    if (records.length === 0) {
-        if (data.activities) {
-            localStorage.setItem("activities", JSON.stringify(Object.values(data.activities)));
-        }
-        if (data.categories) {
-            localStorage.setItem("categories", JSON.stringify(data.categories));
-        }
-        if (DEBUG) console.log("Defaults loaded for first-time user:", data);
-    } else if (DEBUG) {
-        console.log("Records in place, not overwriting with defaults:");
+    if (records.length === 0 && data.activities) {
+        localStorage.setItem("activities", JSON.stringify(Object.values(data.activities)));
     }
-    if (DEBUG) console.log("Defaults processed and stored in localStorage:", data);
-}
+  }
+
+function processCategories(data) {
+    if (!data) throw new Error("Invalid categories JSON");
+    if (data.categories) {
+        localStorage.setItem("categories", JSON.stringify(data.categories));
+    }
+  }
 
 function handleFetchError(error) {
     console.error("Error fetching or processing defaults:", error);
