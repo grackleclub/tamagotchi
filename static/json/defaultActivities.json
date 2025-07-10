@@ -2,33 +2,64 @@
   "activities": {
       "ride": {
           "name": "ride",
-          "icon": "🚲",
-          "description": "bicycle ride",
           "categories": [
-            {"category": "health", "points": 1},
-            {"category": "peace", "points": 0},
-            {"category": "education", "points": 0}
+            {"category": "health", "points": 2},
+            {"category": "social", "points": 1},
+            {"category": "create", "points": 0},
+            {"category": "soothe", "points": 0},
+            {"category": "read", "points": 0}
           ]
       },
-      "play": {
-          "name": "play",
-          "icon": "⚽",
-          "description": "play a sport",
-          "categories": [
-            {"category": "health", "points": 1},
-            {"category": "peace", "points": 0},
-            {"category": "education", "points": 0}  
-          ]
-      },
-      "meditate": {
-          "name": "meditate",
-          "icon": "🧘",
-          "description": "meditation session",
+      "DnD": {
+          "name": "DnD",
           "categories": [
             {"category": "health", "points": 0},
-            {"category": "peace", "points": 1},
-            {"category": "education", "points": 0}
+            {"category": "social", "points": 1},
+            {"category": "create", "points": 0},
+            {"category": "soothe", "points": 0},
+            {"category": "read", "points": 0}
+          ]
+      },
+      "code": {
+          "name": "code",
+          "categories": [
+            {"category": "health", "points": 0},
+            {"category": "social", "points": 0},
+            {"category": "create", "points": 2},
+            {"category": "soothe", "points": 0},
+            {"category": "read", "points": 0}
+          ]
+      },
+      "music": {
+          "name": "music",
+          "categories": [
+            {"category": "health", "points": 0},
+            {"category": "social", "points": 0},
+            {"category": "create", "points": 1},
+            {"category": "soothe", "points": 2},
+            {"category": "read", "points": 0}
+          ]
+      },
+      "read": {
+          "name": "read",
+          "categories": [
+            {"category": "health", "points": 0},
+            {"category": "social", "points": 0},
+            {"category": "create", "points": 0},
+            {"category": "soothe", "points": 0},
+            {"category": "read", "points": 2}
+          ]
+      },
+      "game": {
+          "name": "game",
+          "categories": [
+            {"category": "health", "points": 0},
+            {"category": "social", "points": 0},
+            {"category": "create", "points": 0},
+            {"category": "soothe", "points": 1},
+            {"category": "read", "points": 0}
           ]
       }
-  }
+    }
 }
+

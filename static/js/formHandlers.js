@@ -1,48 +1,77 @@
+import { DEBUG } from "./config.js";
 import { renderArchivedRecordTable } from "./record.js";
 import { activityTemplateList, populateOptions } from "./ui.js";
+
+function getActivityFormData() {
+  const activityName = document.getElementById("activityName").value.trim();
+  const categoriesObj = JSON.parse(localStorage.getItem("categories")) || {};
+  const categoryNames = Object.keys(categoriesObj);
+
+  const categoryValues = categoryNames.map(cat => {
+    const value = document.getElementById(cat)?.value.trim() || "";
+    return { category: cat, points: parseInt(value || "0", 10) };
+  });
+  
+  return { activityName, categoryValues };
+}
+
+function validateActivityData({ activityName, categoryValues}) {
+  if (!activityName) {
+    return { isValid: false, message: "Enter an activity name." };
+  }
+  if (categoryValues.every(c => !c.points)) {
+    return { isValid: false, message: "Add a value to at least one category." };
+  }
+  return { isValid: true };
+}
+
+function activityExists(activityName) {
+  const activities = JSON.parse(localStorage.getItem("activities")) || [];
+  return activities.some(activity => 
+    activity.name.toLowerCase() === activityName.toLowerCase()
+  );
+}
+
+function createActivityObject(activityName, categoryValues) {
+  return {
+    name: activityName,
+    categories: categoryValues
+    };
+  }
+
+function saveActivity(activity) {
+  const activities = JSON.parse(localStorage.getItem("activities")) || [];
+  activities.push(activity);
+  localStorage.setItem("activities", JSON.stringify(activities));
+  if (DEBUG) console.log(`Adding activity: ${activity.name}`, activity);
+}
+
+function updateActivityUI() {
+  resetForm("addActivity");
+  renderAddActivityFields();
+  activityTemplateList();
+  populateOptions();
+}
 
 export function activityTemplateAdd(event) {
   event.preventDefault();
 
-  const activityName = document.getElementById("activityName").value.trim();
-  const categoriesObj = JSON.parse(localStorage.getItem("categories")) || {};
-  const categoryNames = Object.keys(categoriesObj);
-  const categoryValues = categoryNames.map(cat => {
-    const vale = document.getElementById(cat)?.value.trim() || "";
-    return { category: cat, points: parseInt(value || "0", 10) };
-  });
-
-  if (!activityName) {
-    alert("Enter an activity name.");
+  const formData = getActivityFormData();
+  const validation = validateActivityData(formData);
+  if (!validation.isValid) {
+    alert(validation.message);
     return;
   }
 
-  if (categoryValues.every(c => !c.points)) {
-    alert("Add a value to at least one category.");
-    return;
-  }
-  
-  const activities = JSON.parse(localStorage.getItem("activities")) || [];
-  const existingActivity = activities.some(activity => activity.name.toLowerCase() === activityName.toLowerCase());
-  if (existingActivity) {
+  if (activityExists(formData.activityName)) {
     alert("That activity exists. Choose a different name.");
     return;
   }
 
-  const activity = {
-    name: activityName,
-    categories: categoryValues
-  };
-
-    activities.push(activity);
-    console.log(`Adding activity: ${activityName}`, activity);
-    localStorage.setItem("activities", JSON.stringify(activities));
-
-    resetForm("addActivity");
-    renderAddActivityFields();
-    activityTemplateList();
-    populateOptions();
-    alert("Activity added successfully!");
+  const activity = createActivityObject(formData.activityName, formData.categoryValues);
+  saveActivity(activity);
+  updateActivityUI();
+  alert(`"${activity.name}" added successfully!`);
 }
 
 export function renderAddActivityFields() {

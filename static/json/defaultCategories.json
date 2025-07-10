@@ -4,12 +4,20 @@
       "name": "health",
       "icon": "♥️"
     },
-    "peace": {
-      "name": "peace",
-      "icon": "☮️"
+    "social": {
+      "name": "social",
+      "icon": "👥"
     },
-    "education": {
-      "name": "education",
+    "create": {
+      "name": "create",
+      "icon": "🎶"
+    },
+    "soothe" : {
+      "name": "soothe",
+      "icon": "😌"
+    },
+    "read": {
+      "name": "read",
       "icon": "📚"
     }
   }

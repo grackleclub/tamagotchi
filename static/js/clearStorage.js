@@ -9,10 +9,8 @@ export function removeActivity(index) {
 export function clearLocalStorage() {
   if (confirm("Are you sure you want to permanently clear all data?")) {
     localStorage.clear();
-    setTimeout(() => {
-      console.log("localStorage cleared")
-      alert("Local storage cleared!");
-    }, 100);
+    console.log("localStorage cleared");
+    alert("Local storage cleared!");
   }
 }
 

@@ -48,14 +48,10 @@ export async function renderCategoryList() {
   const categoryList = document.getElementById("categoryList");
   categoryList.innerHTML = "";
 
-  // Use cached defaults
-  const defaults = JSON.parse(localStorage.getItem("defaults")) || {};
-  const categories = defaults.categories || {};
-  const defaultActivities = Object.values(defaults.activities || {});
+  const categories = JSON.parse(localStorage.getItem("categories")) || {};
   const customActivities = JSON.parse(localStorage.getItem("activities")) || [];
-  const allActivities = defaultActivities.concat(customActivities);
 
-  const activityMap = buildActivityMap(allActivities);
+  const activityMap = buildActivityMap(customActivities);
 
   const records = JSON.parse(localStorage.getItem("records")) || [];
   const recentRecords = records.filter(record => isRecentRecord(record));
@@ -69,17 +65,22 @@ function updateLittleGuy(categoryCounts) {
   const littleGuy = document.getElementById("littleGuy");
   if (!littleGuy) return;
 
-  const health = categoryCounts["health"] || 0;
-  const peace = categoryCounts["peace"] || 0;
+  const categories = JSON.parse(localStorage.getItem("categories")) || {};
+  const categoryNames = Object.keys(categories);
 
-  if (health > GOAL && peace > GOAL) {
+  const categoryCounts_values = categoryNames.map(name => categoryCounts[name] || 0);
+  const totalPoints = categoryCounts_values.reduce((sum, points) => sum + points, 0);
+  const averagePoints = categoryNames.length > 0 ? totalPoints / categoryNames.length : 0;
+
+  if (averagePoints > GOAL) {
     littleGuy.textContent = "😊";
-  } else if (health > NEUTRAL || peace > NEUTRAL) {
+  } else if (averagePoints > NEUTRAL) {
     littleGuy.textContent = "😐";
-  } else if (health === NEUTRAL && peace === NEUTRAL) {
+  } else if (averagePoints === NEUTRAL) {
     littleGuy.textContent = "😢";
   } else {
-    littleGuy.textContent = "🫥";}  
+    littleGuy.textContent = "🫥";
+  }
 }
 
 function buildActivityMap(activities) {
