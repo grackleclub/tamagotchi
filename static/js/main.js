@@ -17,6 +17,8 @@ function addEventListeners() {
 function clearLocalStorageClick() {
   clearLocalStorage();
   activityTemplateList();
+  renderRecordList();
+  renderCategoryList();
   populateOptions();
 }
 

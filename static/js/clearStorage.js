@@ -16,7 +16,7 @@ export function clearLocalStorage() {
 
 export function clearRecords() {
   if (confirm("Are you sure you want to clear all recorded entries?")) {
-    localStorage.removeItem("record");
+    localStorage.removeItem("records");
     if (typeof renderRecordList === "function") {
       renderRecordList();
     }

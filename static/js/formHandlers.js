@@ -3,7 +3,7 @@ import { renderArchivedRecordTable } from "./record.js";
 import { activityTemplateList, populateOptions } from "./ui.js";
 
 function getActivityFormData() {
-  const activityName = document.getElementById("activityName").value.trim();
+  const activityName = document.getElementById("Name").value.trim();
   const categoriesObj = JSON.parse(localStorage.getItem("categories")) || {};
   const categoryNames = Object.keys(categoriesObj);
 

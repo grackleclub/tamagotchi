@@ -8,7 +8,7 @@ export function usage() {
     const maxBytes = 5242880;
     const percentageUsed = (totalBytes / maxBytes) * 100;
     if (DEBUG) console.log(`localStorage usage calculated: ${totalBytes} bytes (${percentageUsed.toFixed(2)}% of capacity)`);
-    return percentageUsed.toFixed(2); // Return the percentage as a string with 2 decimal places
+    return percentageUsed.toFixed(2); 
 }
 
 export function fetchDefaults() {
@@ -32,7 +32,7 @@ function handleResponse(response) {
 }
 
 function processActivities(data) {
-    if (!data) throw new Error("Invalid activitie JSON");
+    if (!data) throw new Error("Invalid activities JSON");
     localStorage.setItem("defaultActivities", JSON.stringify(data));
     const records = JSON.parse(localStorage.getItem("records")) || [];
     if (records.length === 0 && data.activities) {
