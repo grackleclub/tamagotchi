@@ -84,6 +84,9 @@ export function renderAddActivityFields() {
 
   const categoriesObj = JSON.parse(localStorage.getItem("categories"));
   if (!categoriesObj) return;
+
+  form.insertBefore(document.createElement("br"), form.lastElementChild);
+
   Object.values(categoriesObj).forEach(cat => {
     const label = document.createElement("label");
     label.textContent = cat.name;
