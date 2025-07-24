@@ -142,6 +142,32 @@ input {
   margin: calc(var(--spacer) / 2);
 }
 
+.list li {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.list li::after {
+  content: ":";
+  text-align: center;
+  grid-column: 2;
+  grid-row: 1; 
+}
+
+.subject {
+  text-align: right;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.result {
+  text-align: right;
+  grid-column: 3;
+  grid-row: 1; 
+}
+
 .addActivity {
   text-align: right;
 }
@@ -149,51 +175,6 @@ input {
 .activityList {
   align-items: right;
   text-align: right;
-}
-
-#categoryList li {
-  display: grid;
-  grid-template-columns: 1fr auto .25fr;
-  gap: .5rem;
-  text-align: left;
-}
-
-.category-name {
-  text-align: left;
-}
-
-.category-colon {
-  text-align: center;
-}
-
-.category-count {
-  text-align: right;
-}
-
-#recordList li {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-#recordList li::after {
-  content: ":";
-  text-align: center;
-  grid-column: 2;
-  grid-row: 1; 
-}
-
-.activity {
-  text-align: right;
-  grid-column: 1;
-  grid-row: 1;
-}
-
-.time {
-  text-align: left;
-  grid-column: 3;
-  grid-row: 1; 
 }
 
 .btn {

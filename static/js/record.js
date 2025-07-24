@@ -106,16 +106,12 @@ function renderRecordEntry(record) {
   const recordList = document.getElementById("recordList");
   const li = document.createElement("li");
   const now = new Date().toISOString();
-  const { hours, days } = hoursBetween(record.date, now);
-  
-  const timeText = hours < 24 ? `${hours} hours ago` : `${days} days ago`;
-  
-  // Use semantic HTML structure
+  const { hours, days } = hoursBetween(record.date, now);  
+  const timeText = hours < 24 ? `${hours} hours ago` : `${days} days ago`;  
   li.innerHTML = `
-    <span class="activity">${record.activity}</span>
-    <span class="time">${timeText}</span>
+    <span class="subject">${record.activity}</span>
+    <span class="result">${timeText}</span>
   `;
-  
   recordList.appendChild(li);
 }
 

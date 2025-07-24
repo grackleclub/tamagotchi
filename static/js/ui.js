@@ -114,22 +114,7 @@ function countCategoriesInRecords(records, activityMap) {
 function renderCategoryCountItem(categoryCounts, categoryList, category) {
   const li = document.createElement("li");
   const count = categoryCounts[category.name] || 0;
-  
-  const nameSpan = document.createElement("span");
-  nameSpan.className = "category-name";
-  nameSpan.textContent = `${category.icon ? category.icon + " " : ""}${category.name}`;
-
-  const colonSpan = document.createElement("span");
-  colonSpan.className = "category-colon";
-  colonSpan.textContent = ": ";
-
-  const countSpan = document.createElement("span");
-  countSpan.className = "category-count";
-  countSpan.textContent = count;
-
-  li.appendChild(nameSpan);
-  li.appendChild(colonSpan);
-  li.appendChild(countSpan);
+  li.innerHTML = `<span class="subject">${category.icon ? category.icon + " " : ""}${category.name}</span><span class="result">${count}</span>`;
   categoryList.appendChild(li);
 }
 
