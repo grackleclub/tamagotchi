@@ -35,21 +35,20 @@ export function recordList() {
 }
 
 export function recordDelete() {
-    if (DEBUG) console.log("Deleting record entry...");
     const percentUsed = usage();
     if (percentUsed < 95) {
       return;
     }
 
-    alert("Local storage is almost full. Deleting 20 oldest record entries.");
-
     let records = JSON.parse(localStorage.getItem("records")) || [];
-    if (records.length > 0) {
-      records = records.slice(20);
-      localStorage.setItem("records", JSON.stringify(records));
-      renderRecordList();
-      renderCategoryList();
-    }
+    const twentyPercent = Math.ceil(records.length * 0.2);
+
+    alert(`Local storage is almost full. Deleting ${twentyPercent} oldest record entries.`);
+
+    records = records.slice(twentyPercent);
+    localStorage.setItem("records", JSON.stringify(records));
+    renderRecordList();
+    renderCategoryList();
 }
 
 export function recordInterpret() {
@@ -78,7 +77,7 @@ function hoursBetween(startTimestamp, endTimestamp) {
     return { hours, days };
 }
 
-export function isRecentRecord(record) {
+export function isRecordWithinWeek(record) {
     const now = new Date();
     const recordDate = new Date(record.date);
     const diffDays = (now - recordDate) / (1000 * 60 * 60 * 24);
@@ -91,7 +90,7 @@ export function renderRecordList() {
 
   const records = JSON.parse(localStorage.getItem("records")) || [];
 
-  const recentRecords = records.filter(isRecentRecord);
+  const recentRecords = records.filter(isRecordWithinWeek);
 
   if (recentRecords.length === 0) {
     recordList.innerHTML = "<li>No recent record entries found</li>";

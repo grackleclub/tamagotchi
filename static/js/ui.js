@@ -1,5 +1,5 @@
 import { removeActivity } from "./clearStorage.js";
-import { isRecentRecord } from "./record.js";
+import { isRecordWithinWeek } from "./record.js";
 
 const GOAL = 2;
 const NEUTRAL = 0;
@@ -54,7 +54,7 @@ export async function renderCategoryList() {
   const activityMap = buildActivityMap(customActivities);
 
   const records = JSON.parse(localStorage.getItem("records")) || [];
-  const recentRecords = records.filter(record => isRecentRecord(record));
+  const recentRecords = records.filter(record => isRecordWithinWeek(record));
   const categoryCounts = countCategoriesInRecords(recentRecords, activityMap);
 
   Object.values(categories).forEach(renderCategoryCountItem.bind(null, categoryCounts, categoryList));
