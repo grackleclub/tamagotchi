@@ -1,0 +1,24 @@
+{
+  "categories": {
+    "health": {
+      "name": "health",
+      "icon": "♥️"
+    },
+    "social": {
+      "name": "social",
+      "icon": "👥"
+    },
+    "create": {
+      "name": "create",
+      "icon": "🎶"
+    },
+    "soothe": {
+      "name": "soothe",
+      "icon": "😌"
+    },
+    "read": {
+      "name": "read",
+      "icon": "📚"
+    }
+  }
+}

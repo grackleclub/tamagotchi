@@ -14,10 +14,11 @@ type page struct {
 	Title string
 }
 
+// handleRoot handles the root URL and serves the index page
 func handleRoot(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
-		slog.Info("GET index")
+		slog.Info("GET index", "path", r.URL.Path)
 		tmpl, err := template.ParseFS(static, "static/html/index.html")
 		if err != nil {
 			slog.Error("parse template", "error", err)
@@ -33,8 +34,8 @@ func handleRoot(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Custom file server to set correct MIME types
-func customFileServer(fs http.FileSystem) http.Handler {
+// handleStatic ensures correct content headers are set, based on MIME types
+func handleStatic(fs http.FileSystem) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ext := filepath.Ext(r.URL.Path)
 		mimeType := mime.TypeByExtension(ext)

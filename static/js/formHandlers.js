@@ -1,57 +1,122 @@
-import { displayActivities, populateOptions } from "./ui.js";
+import { DEBUG } from "./config.js";
+import { renderArchivedRecordTable } from "./record.js";
+import { activityTemplateList, populateOptions } from "./ui.js";
 
-export function handleSelectActivitySubmit(event) {
-  event.preventDefault();
-  resetForm("selectActivity");
-  console.log("Select Activity Form Submitted");
+function getActivityFormData() {
+  const activityName = document.getElementById("Name").value.trim();
+  const categoriesObj = JSON.parse(localStorage.getItem("categories")) || {};
+  const categoryNames = Object.keys(categoriesObj);
+
+  const categoryValues = categoryNames.map(cat => {
+    const value = document.getElementById(cat)?.value.trim() || "";
+    return { category: cat, points: parseInt(value || "0", 10) };
+  });
+  
+  return { activityName, categoryValues };
 }
 
-export function handleAddActivitySubmit(event) {
+function validateActivityData({ activityName, categoryValues}) {
+  if (!activityName) {
+    return { isValid: false, message: "Enter an activity name." };
+  }
+  if (categoryValues.every(c => !c.points)) {
+    return { isValid: false, message: "Add a value to at least one category." };
+  }
+  return { isValid: true };
+}
+
+function activityExists(activityName) {
+  const activities = JSON.parse(localStorage.getItem("activities")) || [];
+  return activities.some(activity => 
+    activity.name.toLowerCase() === activityName.toLowerCase()
+  );
+}
+
+function createActivityObject(activityName, categoryValues) {
+  return {
+    name: activityName,
+    categories: categoryValues
+    };
+  }
+
+function saveActivity(activity) {
+  const activities = JSON.parse(localStorage.getItem("activities")) || [];
+  activities.push(activity);
+  localStorage.setItem("activities", JSON.stringify(activities));
+  if (DEBUG) console.log(`Adding activity: ${activity.name}`, activity);
+}
+
+function updateActivityUI() {
+  resetForm("addActivity");
+  renderAddActivityFields();
+  activityTemplateList();
+  populateOptions();
+}
+
+export function activityTemplateAdd(event) {
   event.preventDefault();
 
-  const activityName = document.getElementById("Name").value.trim();
-  const health = document.getElementById("health").value.trim();
-  const education = document.getElementById("education").value.trim();
-  const joy = document.getElementById("joy").value.trim();
-  const peace = document.getElementById("peace").value.trim();
-
-  if (!activityName) {
-    alert("Please enter an activity name.");
+  const formData = getActivityFormData();
+  const validation = validateActivityData(formData);
+  if (!validation.isValid) {
+    alert(validation.message);
     return;
   }
 
-  if (!health && !education && !joy && !peace) {
-    alert("Please enter at least one category.");
+  if (activityExists(formData.activityName)) {
+    alert("That activity exists. Choose a different name.");
     return;
   }
+
+  const activity = createActivityObject(formData.activityName, formData.categoryValues);
+  saveActivity(activity);
+  updateActivityUI();
+  alert(`"${activity.name}" added successfully!`);
+}
+
+export function renderAddActivityFields() {
+  const form = document.getElementById("addActivity");
+  if (!form) return;
   
-  const activities = JSON.parse(localStorage.getItem("activities")) || [];
-  
-  const existingActivity = activities.some(activity => activity.name.toLowerCase() === activityName.toLowerCase());
-  if (existingActivity) {
-    alert("That activity exists. Please choose a different name.");
-    return;
+  while (form.children.length > 2) {
+    form.removeChild(form.children[form.children.length - 2]);
   }
 
-  const activity = {
-    name: activityName,
-    categories: [
-      { category: "health", points: parseInt(health || "0", 10) },
-      { category: "education", points: parseInt(education || "0", 10) },
-      { category: "joy", points: parseInt(joy || "0", 10) },
-      { category: "peace", points: parseInt(peace || "0", 10) }
-    ]
-  };
+  const categoriesObj = JSON.parse(localStorage.getItem("categories"));
+  if (!categoriesObj) return;
 
-    activities.push(activity);
-    localStorage.setItem("activities", JSON.stringify(activities));
+  form.insertBefore(document.createElement("br"), form.lastElementChild);
 
-    resetForm("addActivity");
-    displayActivities();
-    populateOptions();
-    alert("Activity added successfully!");
+  Object.values(categoriesObj).forEach(cat => {
+    const label = document.createElement("label");
+    label.textContent = cat.name;
+    const input = document.createElement("input");
+    input.className = "field";
+    input.type = "number";
+    input.id = cat.name;
+    input.name = cat.name;
+    input.placeholder = "Points";
+    form.insertBefore(label, form.lastElementChild);
+    form.insertBefore(input, form.lastElementChild);
+    form.insertBefore(document.createElement("br"), form.lastElementChild);
+  })
 }
 
 export function resetForm(formId) {
   document.getElementById(formId).reset();
+}
+
+export function toggleArchived(event) {
+  event.preventDefault();
+
+  const table = document.getElementById("archivedRecordTable");
+  const button = event.currentTarget;
+  if (table.style.display === "none") {
+    renderArchivedRecordTable();
+    table.style.display = "block";
+    button.textContent = "Hide Records";
+  } else {
+    table.style.display = "none";
+    button.textContent = "Show All Records";
+  }
 }
