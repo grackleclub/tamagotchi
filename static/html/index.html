@@ -9,8 +9,16 @@
 </head>
 
 <body>
-  <div id="pick">
+  <div class="greet">
     <h1>{{ .Title }}</h1>
+  </div>
+
+  <div class="little_guy">
+    <h2>Little Guy</h2>
+    <h2 id="littleGuy"></h2>
+  </div>
+
+  <div id="pick" class="pick">
     <h2>Select below</h2>
     <form id="recordCreate">
       <select class="field" name="recordItem" id="recordItem">
@@ -18,24 +26,19 @@
       <input class="btn" type="submit" value="Submit">
     </form>
   </div>
-
-  <div>
-    <h2>Little Guy</h2>
-    <h2 id="littleGuy"></h2>
-  </div>
-
-  <div>
+  
+  <div class="category_list">
     <h2>Categories</h2>
     <ul id="categoryList"></ul>
   </div>
 
-  <div>
+  <div class="current">
     <h2>Record</h2>
     <ul id="recordList"></ul>
     <button class="btn" id="clearRecord" type="button">Clear Record</button>
   </div>
 
-  <div>
+  <div class="old">
     <button class="btn" id="toggleArchived" type="button">Show All Records</button>
     <table id="archivedRecordTable" style="display: none;">
       <thead>
@@ -50,18 +53,18 @@
   </div>
 
 
-  <div>
+  <div class="add">
   <h3>Add Activity</h3>
-  <form id="addActivity" class="addActivity">
+  <form id="addActivity" class="add_activity">
     <input type="text" id="Name" name="Name" placeholder="Activity">
     <input class="btn" type="submit" value="Add">
   </form>
   <br> 
 </div>
 
-<div>
+<div class="your_activities">
   <h3>Your Activities</h3>
-  <ul id="activityList" class="activityList"><span></span></ul>
+  <ul id="activityList" class="activity_list"><span></span></ul>
   <br>
 </div>
 

@@ -91,7 +91,6 @@ export function renderAddActivityFields() {
     const label = document.createElement("label");
     label.textContent = cat.name;
     const input = document.createElement("input");
-    input.className = "field";
     input.type = "number";
     input.id = cat.name;
     input.name = cat.name;

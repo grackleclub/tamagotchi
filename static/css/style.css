@@ -132,7 +132,12 @@ body {
 }
 
 div {
+  outline: 1px dotted red;
   margin: var(--spacer) 0;
+  border-radius: var(--br);
+  padding: var(--spacer);
+  width: 100%;
+  max-width: 20em;
 }
 
 input {
@@ -142,11 +147,16 @@ input {
   margin: calc(var(--spacer) / 2);
 }
 
-.addActivity {
+.greet {
+  align-self: flex-start;
+  text-align: left;
+}
+
+.add_activity {
   text-align: right;
 }
 
-.activityList {
+.activity_list {
   align-items: right;
   text-align: right;
 }
@@ -158,15 +168,15 @@ input {
   text-align: left;
 }
 
-.category-name {
+.category_name {
   text-align: left;
 }
 
-.category-colon {
+.category_colon {
   text-align: center;
 }
 
-.category-count {
+.category_count {
   text-align: left;
 }
 
