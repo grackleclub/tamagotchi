@@ -1,4 +1,4 @@
-import { DEBUG } from "./config.js";
+import { DEBUG, print } from "./config.js";
 import { renderArchivedRecordTable } from "./record.js";
 import { activityTemplateList, populateOptions } from "./ui.js";
 
@@ -43,7 +43,7 @@ function saveActivity(activity) {
   const activities = JSON.parse(localStorage.getItem("activities")) || [];
   activities.push(activity);
   localStorage.setItem("activities", JSON.stringify(activities));
-  if (DEBUG) console.log(`Adding activity: ${activity.name}`, activity);
+  print(`Adding activity: ${activity.name}`, activity);
 }
 
 function updateActivityUI() {
@@ -91,7 +91,6 @@ export function renderAddActivityFields() {
     const label = document.createElement("label");
     label.textContent = cat.name;
     const input = document.createElement("input");
-    input.className = "field";
     input.type = "number";
     input.id = cat.name;
     input.name = cat.name;

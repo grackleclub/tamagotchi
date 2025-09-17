@@ -1,6 +1,6 @@
 import { renderCategoryList } from "./ui.js";
 import { usage } from "./storage.js";
-import { DEBUG } from "./config.js";
+import { DEBUG, print } from "./config.js";
 
 // create a record entry and place in localStorage
 export function recordCreate(event) {
@@ -14,13 +14,12 @@ export function recordCreate(event) {
         return;
     }
 
-    if (DEBUG) console.log(`recording activity: ${activityName}`);
-    records.push(
-        {
-            activity: activityName,
-            date: new Date().toISOString(),
-        }
-    )
+    print(`recording activity: ${activityName}`);
+
+    records.push({
+        activity: activityName,
+        date: new Date().toISOString(),
+    });
     localStorage.setItem("records", JSON.stringify(records));
     document.getElementById("recordCreate").reset();
     renderRecordList();
@@ -29,9 +28,9 @@ export function recordCreate(event) {
 }
 
 export function recordList() {
-    if (DEBUG) console.log("Displaying recorded entries...");
+    print("Displaying recorded entries...");
     const records = JSON.parse(localStorage.getItem("records")) || [];
-    if (DEBUG) console.log(records);
+    print(records);
 }
 
 export function recordDelete() {
@@ -52,17 +51,17 @@ export function recordDelete() {
 }
 
 export function recordInterpret() {
-    if (DEBUG) console.log("Interpreting recorded entries...");
+    print("Interpreting recorded entries...");
     const records = JSON.parse(localStorage.getItem("records")) || [];
     for (let record of records) {
-        if (DEBUG) console.log(`recorded: ${record.activity} @ ${record.date}`);
+        print(`recorded: ${record.activity} @ ${record.date}`);
     }
 
     const activities = JSON.parse(localStorage.getItem("activities")) || [];
     for (let activity of activities) {
-        if (DEBUG) console.log(`Activity: ${activity.name}`);
+        print(`Activity: ${activity.name}`);
         for (let category of activity.categories) {
-            if (DEBUG) console.log(`  - ${category.category}: ${category.points}`);
+            print(`  - ${category.category}: ${category.points}`);
         }
     }
 }
