@@ -1,13 +1,13 @@
-import { DEBUG } from "./config.js";
+import { DEBUG, print } from "./config.js";
 
 const activitiesPath = "/static/json/defaultActivities.json";
 const categoriesPath = "/static/json/defaultCategories.json";
+const DEFAULT_MAX_BYTES = 5242880
 
-export function usage() {
+export function usage(maxBytes = DEFAULT_MAX_BYTES) {
     const totalBytes = new Blob(Object.values(localStorage)).size;
-    const maxBytes = 5242880;
     const percentageUsed = (totalBytes / maxBytes) * 100;
-    if (DEBUG) console.log(`localStorage usage calculated: ${totalBytes} bytes (${percentageUsed.toFixed(2)}% of capacity)`);
+    print(`localStorage usage calculated: ${totalBytes} bytes (${percentageUsed.toFixed(2)}% of capacity)`);
     return percentageUsed.toFixed(2); 
 }
 

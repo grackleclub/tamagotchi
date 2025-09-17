@@ -3,7 +3,7 @@ import * as clearStorage from "./clearStorage.js";
 import * as ui from "./ui.js";
 import * as record from "./record.js";
 import * as storage from "./storage.js"; 
-import { DEBUG } from "./config.js";
+import { DEBUG, print } from "./config.js";
 
 function addEventListeners() {
   document.getElementById("addActivity").addEventListener("submit", formHandlers.activityTemplateAdd);
@@ -36,7 +36,7 @@ async function initializeApp() {
 }
 
 document.addEventListener("DOMContentLoaded", initializeApp);
-if (DEBUG) console.log("App initialized");
+print("App initialized");
 
 // prints some basic debug information to the console after load
 if (DEBUG) record.recordInterpret();
@@ -44,4 +44,4 @@ if (DEBUG) record.recordList();
 
 
 const used = storage.usage();
-if (DEBUG) console.log(`Used storage: ${used}%`);
+print(`Used storage: ${used}%`);
