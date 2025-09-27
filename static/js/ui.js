@@ -25,7 +25,7 @@ export function populateOptions() {
   selectMenu.innerHTML = "";
   const defaultOption = document.createElement("option");
   defaultOption.vale = "";
-  defaultOption.textContent = "Select and activity";
+  defaultOption.textContent = "Select an activity";
   selectMenu.appendChild(defaultOption);
   // Use cached defaults
   const defaults = JSON.parse(localStorage.getItem("defaults")) || {};
