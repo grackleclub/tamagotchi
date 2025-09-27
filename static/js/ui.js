@@ -11,17 +11,22 @@ export function activityTemplateList() {
   const activities = JSON.parse(localStorage.getItem("activities")) || [];
 
   if (activities.length === 0) {
-    activityList.innerHTML = "<li>No activities found</li>";
+    const li = document.createElement("li");
+    li.textContent = "No activities found";
+    activityList.appendChild(li);
     return;
   }
 
   activities.forEach(renderActivityTemplate);
 }
 
-export async function populateOptions() {
+export function populateOptions() {
   const selectMenu = document.getElementById("recordItem");
-  selectMenu.innerHTML = '<option value="">Select an activity</option>';
-
+  selectMenu.innerHTML = "";
+  const defaultOption = document.createElement("option");
+  defaultOption.vale = "";
+  defaultOption.textContent = "Select and activity";
+  selectMenu.appendChild(defaultOption);
   // Use cached defaults
   const defaults = JSON.parse(localStorage.getItem("defaults")) || {};
   const defaultActivities = Object.values(defaults.activities || {});
@@ -116,15 +121,15 @@ function renderCategoryCountItem(categoryCounts, categoryList, category) {
   const count = categoryCounts[category.name] || 0;
   
   const nameSpan = document.createElement("span");
-  nameSpan.className = "category_name";
+  nameSpan.className = "category-name";
   nameSpan.textContent = `${category.icon ? category.icon + " " : ""}${category.name}`;
 
   const colonSpan = document.createElement("span");
-  colonSpan.className = "category_colon";
+  colonSpan.className = "category-colon";
   colonSpan.textContent = ": ";
 
   const countSpan = document.createElement("span");
-  countSpan.className = "category_count";
+  countSpan.className = "category-count";
   countSpan.textContent = count;
 
   li.appendChild(nameSpan);
