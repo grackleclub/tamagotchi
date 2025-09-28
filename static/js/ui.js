@@ -24,7 +24,7 @@ export function populateOptions() {
   const selectMenu = document.getElementById("recordItem");
   selectMenu.innerHTML = "";
   const defaultOption = document.createElement("option");
-  defaultOption.vale = "";
+  defaultOption.value = "";
   defaultOption.textContent = "Select an activity";
   selectMenu.appendChild(defaultOption);
   // Use cached defaults
@@ -121,15 +121,15 @@ function renderCategoryCountItem(categoryCounts, categoryList, category) {
   const count = categoryCounts[category.name] || 0;
   
   const nameSpan = document.createElement("span");
-  nameSpan.className = "category-name";
+  nameSpan.className = "category_name";
   nameSpan.textContent = `${category.icon ? category.icon + " " : ""}${category.name}`;
 
   const colonSpan = document.createElement("span");
-  colonSpan.className = "category-colon";
+  colonSpan.className = "category_colon";
   colonSpan.textContent = ": ";
 
   const countSpan = document.createElement("span");
-  countSpan.className = "category-count";
+  countSpan.className = "category_count";
   countSpan.textContent = count;
 
   li.appendChild(nameSpan);
