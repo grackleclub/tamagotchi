@@ -11,17 +11,22 @@ export function activityTemplateList() {
   const activities = JSON.parse(localStorage.getItem("activities")) || [];
 
   if (activities.length === 0) {
-    activityList.innerHTML = "<li>No activities found</li>";
+    const li = document.createElement("li");
+    li.textContent = "No activities found";
+    activityList.appendChild(li);
     return;
   }
 
   activities.forEach(renderActivityTemplate);
 }
 
-export async function populateOptions() {
+export function populateOptions() {
   const selectMenu = document.getElementById("recordItem");
-  selectMenu.innerHTML = '<option value="">Select an activity</option>';
-
+  selectMenu.innerHTML = "";
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent = "Select an activity";
+  selectMenu.appendChild(defaultOption);
   // Use cached defaults
   const defaults = JSON.parse(localStorage.getItem("defaults")) || {};
   const defaultActivities = Object.values(defaults.activities || {});
